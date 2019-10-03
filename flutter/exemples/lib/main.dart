@@ -13,22 +13,38 @@ class App extends StatelessWidget {
           title: Text('Basic Widgets'),
         ),
         body: Center(
-          child: Row(
+          child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            textBaseline: TextBaseline.alphabetic,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            verticalDirection: VerticalDirection.down,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: const EdgeInsets.only(left: 30),),
-              Text('bruh'),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('sound effect #2'),
-              ),
-              RaisedButton(child: Text('ROW ROW')),
-              Container(width: 30, height: 120, color: Colors.blue),
+              Band(2, '20%', Colors.pink),
+              Band(3, '30%', Colors.purple),
+              Band(5, '50%', Colors.blue),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class Band extends StatelessWidget {
+  int flex;
+  String text;
+  Color color;
+
+  Band(this.flex, this.text, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        color: color,
+        child: Center(
+          child: Text(text, style: TextStyle(fontSize: 24)),
         ),
       ),
     );
