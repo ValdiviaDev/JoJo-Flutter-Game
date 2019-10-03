@@ -10,40 +10,55 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Semaphore'),
+          title: Text('Numbers'),
         ),
         body: Center(
           child: Container(
-            width: 160,
-            height: 400,
-            decoration:
-                BoxDecoration(color: Colors.black, shape: BoxShape.rectangle),
-            child: Column(
+            color: Colors.yellow,
+            child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               verticalDirection: VerticalDirection.down,
               //crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                 Container(
+                Container(
                   alignment: Alignment.topLeft,
-                  width: 110,
-                  height: 110,
-                  decoration: BoxDecoration(
-                      color: Colors.red, shape: BoxShape.circle),
+                  width: 100,
+                  height: 50,
+                  child: Center(
+                    child: Text('rock',
+                        style: TextStyle(fontSize: 24, color: Colors.white)),
+                  ),
+                  decoration: ShapeDecoration(
+                    color: Colors.grey,
+                    shape: StadiumBorder(),
+                  ),
                 ),
                 Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topLeft,
                   width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                      color: Colors.yellow, shape: BoxShape.circle),
+                  height: 50,
+                  child: Center(
+                    child: Text('jazz',
+                        style: TextStyle(fontSize: 24, color: Colors.white)),
+                  ),
+                  decoration: ShapeDecoration(
+                    color: Colors.grey,
+                    shape: StadiumBorder(),
+                  ),
                 ),
                 Container(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.topLeft,
                   width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                      color: Colors.green, shape: BoxShape.circle),
+                  height: 50,
+                  child: Center(
+                    child: Text('classical',
+                        style: TextStyle(fontSize: 24, color: Colors.white)),
+                  ),
+                  decoration: ShapeDecoration(
+                    color: Colors.grey,
+                    shape: StadiumBorder(),
+                  ),
                 ),
               ],
             ),
