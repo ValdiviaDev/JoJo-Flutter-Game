@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(App());
 }
 
@@ -12,18 +12,23 @@ class App extends StatelessWidget {
         appBar: AppBar(
           title: Text('Basic Widgets'),
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          verticalDirection: VerticalDirection.down,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                color: Colors.red,
+        body: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(padding: const EdgeInsets.only(left: 30),),
+              Text('bruh'),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text('sound effect #2'),
               ),
-            )
-          ],
+              RaisedButton(child: Text('ROW ROW')),
+              Container(width: 30, height: 120, color: Colors.blue),
+            ],
+          ),
         ),
       ),
     );
