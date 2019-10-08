@@ -21,8 +21,12 @@ class App extends StatelessWidget {
               verticalDirection: VerticalDirection.down,
               //crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                NutritionFact(
-                    quantity: 247, description: 'Calories', units: 'kcal'),
+                NumberBall(1, Colors.red),
+                NumberBall(2, Colors.green),
+                NumberBall(3, Colors.blue),
+                NumberBall(4, Colors.red),
+                NumberBall(5, Colors.green),
+                NumberBall(6, Colors.blue),
               ],
             ),
           ),
@@ -32,31 +36,29 @@ class App extends StatelessWidget {
   }
 }
 
-class NutritionFact extends StatelessWidget {
-  final int quantity;
-  final String description;
-  final String units;
+class NumberBall extends StatelessWidget {
+  final int num;
+  final Color color;
 
-  NutritionFact(
-      {@required this.quantity,
-      @required this.description,
-      @required this.units});
+  NumberBall(@required this.num, 
+             @required this.color);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80,
-      height: 160,
-      decoration:
-          ShapeDecoration(shape: StadiumBorder(), color: Colors.orange[100]),
+      alignment: Alignment.topLeft,
+      width: 50,
+      height: 50,
       child: Center(
-        child: Text(
-          '${this.quantity}',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: Text('${this.num}',
+            style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
+      ),
+      decoration: ShapeDecoration(
+        color: color,
+        shape: CircleBorder(),
       ),
     );
   }
