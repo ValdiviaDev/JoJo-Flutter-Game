@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:exemples/stand.dart';
 
 void main() {
   runApp(App());
@@ -8,37 +9,36 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.dark,
+      ),
       home: Scaffold(
         backgroundColor: Colors.white, //Background colour
         appBar: AppBar(
-          title: Text('Attributes'),
+          title: Text('Standpedia'),
         ),
-        body: Center(
-          child: Container(
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                ProductAttribute(
-                    attrib: 'FOOD ENERGY',
-                    quantity: 1250,
-                    units: 'cal',
-                    icon: Icon(
-                      Icons.offline_bolt,
-                      color: Colors.grey,
-                    )),
-                ProductAttribute(
-                    attrib: 'SERVING SIZE',
-                    quantity: 530,
-                    units: 'g',
-                    icon: Icon(
-                      Icons.fastfood,
-                      color: Colors.grey,
-                    )),
-              ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: AspectRatio(
+                aspectRatio: 2/3,
+                child: Image.asset(
+                  stoneFree.image,
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
             ),
-          ),
+            Expanded(
+              flex: 4,
+              child: Container(color: Colors.blue),
+            ),
+             Expanded(
+              flex: 3,
+              child: Container(color: Colors.green),
+            ),
+          ],
         ),
       ),
     );
