@@ -32,18 +32,9 @@ class StandPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: _Header(),
-          ),
-          Expanded(
-            flex: 5,
-            child: _Overview(),
-          ),
-          Expanded(
-            flex: 4,
-            child: StandStats(),
-          ),
+          Expanded(flex: 7, child: _Header()),
+          Expanded(flex: 5, child: _Overview()),
+          Expanded(flex: 4, child: _StandStats()),
         ],
       ),
     );
@@ -72,7 +63,7 @@ class _Header extends StatelessWidget {
               ),
             ),
             AspectRatio(
-              aspectRatio: 1,
+              aspectRatio: 2.03,
               child: Image.asset(
                 stoneFree.image,
                 fit: BoxFit.fitHeight,
@@ -99,25 +90,7 @@ class _Overview extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  child: Icon(
-                    Icons.remove,
-                    color: Colors.orange,
-                    size: 27,
-                  ),
-                ),
-                Text(
-                  "Overview",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+            SectionTitle("Overview"),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -133,6 +106,34 @@ class _Overview extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String title;
+
+  SectionTitle(this.title);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          child: Icon(
+            Icons.remove,
+            color: Colors.orange,
+            size: 27,
+          ),
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -176,41 +177,49 @@ class InfoTag extends StatelessWidget {
   }
 }
 
-class StandStats extends StatelessWidget {
-  const StandStats({
+class _StandStats extends StatelessWidget {
+  const _StandStats({
     Key key,
   }) : super(key: key);
 
+  Row infoRectRow(InfoRect rect1, rect2, rect3) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        rect1,
+        rect2,
+        rect3,
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: ListView(
-        children: <Widget>[
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            Container(
+              child: Column(
+                children: <Widget>[
+                  infoRectRow(
                     InfoRect(Icons.whatshot, "Power", stoneFree.power),
                     InfoRect(Icons.shutter_speed, "Speed", stoneFree.speed),
                     InfoRect(Icons.directions_walk, "Range", stoneFree.range),
-                  ],
-                ),
-                Container(height: 30),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+                  ),
+                  Container(height: 30),
+                  infoRectRow(
                     InfoRect(Icons.accessibility, "Staying", stoneFree.staying),
                     InfoRect(Icons.zoom_in, "Precision", stoneFree.precision),
-                    InfoRect(Icons.wb_incandescent, "Learning", stoneFree.learning),
-                    
-                  ],
-                ),
-              ],
+                    InfoRect(
+                        Icons.wb_incandescent, "Learning", stoneFree.learning),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
