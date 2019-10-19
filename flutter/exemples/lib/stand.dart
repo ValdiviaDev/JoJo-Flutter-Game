@@ -4,8 +4,7 @@ class Stand {
 
   String image;
 
-  String power, speed, staying, precision, learning;
-  int range;
+  String power, speed, staying, precision, learning , range;
 
   Stand(
     this.standName,
@@ -31,8 +30,8 @@ final stoneFree = Stand(
   'Stone Ocean', //int?
   'Ability: Can form a body by gathering the strings '
    'together. Its maximum range is 2 meters, but when it '
-   'unravels into a string, its range increases but becomes'
-    'very weak. It can hear sounds from far away, like a'
+   'unravels into a string, its range increases but becomes '
+    'very weak. It can hear sounds from far away, like a '
     'telephone line.',
   'Short range', //int?
   'assets/stonefree.png',
@@ -41,5 +40,5 @@ final stoneFree = Stand(
   'A',
   'C',
   'A',
-  2
+  "1-2 m"
 );
