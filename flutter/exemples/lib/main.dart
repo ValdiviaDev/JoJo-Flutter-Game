@@ -62,12 +62,11 @@ class _Header extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            AspectRatio(
-              aspectRatio: 2.03,
-              child: Image.asset(
-                stoneFree.image,
-                fit: BoxFit.fitHeight,
-              ),
+            Expanded(
+                child: Image.asset(
+                  stoneFree.image,
+                  fit: BoxFit.fitHeight,
+                ),
             ),
           ],
         ),

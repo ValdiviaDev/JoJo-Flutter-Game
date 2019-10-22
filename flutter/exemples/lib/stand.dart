@@ -27,13 +27,13 @@ class Stand {
 final stoneFree = Stand(
   'Stone Free',
   'Jolyne Kujo',
-  'Stone Ocean', //int?
+  'Stone Ocean',
   'Ability: Can form a body by gathering the strings '
    'together. Its maximum range is 2 meters, but when it '
    'unravels into a string, its range increases but becomes '
     'very weak. It can hear sounds from far away, like a '
     'telephone line.',
-  'Short range', //int?
+  'Short range',
   'assets/stonefree.png',
   'A',
   'B',
