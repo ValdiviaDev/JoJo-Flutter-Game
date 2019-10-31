@@ -1,269 +1,220 @@
 import 'package:flutter/material.dart';
-import 'package:exemples/stand.dart';
+
+import 'WordCounter.dart';
 
 void main() {
-  runApp(StanpediaApp());
+  runApp(App());
 }
 
-class StanpediaApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.dark,
-        canvasColor: Colors.indigo,
+        //canvasColor: Colors.indigo,
       ),
-      home: StandPage(),
+      home: CounterListPage(),
     );
   }
 }
 
-class StandPage extends StatelessWidget {
-  const StandPage({
+class CounterListPage extends StatefulWidget {
+  const CounterListPage({
     Key key,
   }) : super(key: key);
+
+  @override
+  _CounterListPageState createState() => _CounterListPageState();
+}
+
+class _CounterListPageState extends State<CounterListPage> {
+  List<WordCounter> wCount = [];
+
+  void _maybeErase() {
+    showDialog(
+      context: context,
+      builder: (innerContext) => AlertDialog(
+            title: Text('Confirmation'),
+            content: Text(
+              'Are you sure you want to delete all the items?',
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(innerContext).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    for (int i = 0; i < wCount.length; ++i) wCount[i]..Reset();
+                    Navigator.of(innerContext).pop();
+                  });
+                },
+                child: Text('Erase'),
+              )
+            ],
+          ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Standpedia'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(flex: 7, child: _Header()),
-          Expanded(flex: 5, child: _Overview()),
-          Expanded(flex: 4, child: _StandStats()),
+        title: Text('Counter List'),
+        actions: <Widget>[
+          // action button
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              _maybeErase();
+            },
+          ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(
+            MaterialPageRoute(
+              builder: (_) => NewCounterPage(),
+            ),
+          )
+              .then((enter) {
+            if (enter != null) {
+              WordCounter newCont = WordCounter(enter);
+              wCount.add(newCont);
+            }
+          });
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
+      ),
+      body: Scrollbar(
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+          ),
+          itemCount: wCount.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              child: CountRect(wCount[index].word, wCount[index].numTimes),
+              onTap: () {
+                setState(() {
+                  wCount[index].numTimes++;
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  if (wCount[index].numTimes != 0) wCount[index].numTimes--;
+                });
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({
-    Key key,
-  }) : super(key: key);
+class NewCounterPage extends StatefulWidget {
+  @override
+  _NewCounterPageState createState() => _NewCounterPageState();
+}
+
+class _NewCounterPageState extends State<NewCounterPage> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    _controller = TextEditingController(
+      text: 'New name',
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              stoneFree.standName,
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.yellow[300],
-                fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New Counter'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: "Description"),
+                controller: _controller,
+                onSubmitted: (text) {
+                  final String newName = text;
+                  Navigator.of(context).pop(newName);
+                },
               ),
-            ),
-            Expanded(
-                child: Image.asset(
-                  stoneFree.image,
-                  fit: BoxFit.fitHeight,
-                ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Overview extends StatelessWidget {
-  const _Overview({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SectionTitle("Overview"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                InfoTag(105, 25, stoneFree.storyPart, Icons.star_border),
-                InfoTag(105, 25, stoneFree.standUser, Icons.face),
-                InfoTag(105, 25, stoneFree.standType, Icons.aspect_ratio),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Text(stoneFree.description),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  final String title;
-
-  SectionTitle(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          child: Icon(
-            Icons.remove,
-            color: Colors.orange,
-            size: 27,
+              RaisedButton(
+                //Save the new counter
+                child: Text('Save'),
+                onPressed: () {
+                  final String newName = (_controller.text);
+                  Navigator.of(context).pop(newName);
+                },
+              ),
+            ],
           ),
         ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 17,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InfoTag extends StatelessWidget {
-  final double w, h;
-  final String label;
-  final IconData icon;
-
-  InfoTag(this.w, this.h, this.label, this.icon);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Container(
-        width: w,
-        height: h,
-        decoration: ShapeDecoration(
-          color: Colors.indigo[900],
-          shape: StadiumBorder(),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Icon(
-              icon,
-              color: Colors.indigo[200],
-              size: 20,
-            ),
-            Center(
-              child: Text(
-                label,
-                style: TextStyle(fontSize: 12, color: Colors.white),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
 }
 
-class _StandStats extends StatelessWidget {
-  const _StandStats({
-    Key key,
-  }) : super(key: key);
+class CountRect extends StatelessWidget {
+  final String word;
+  final int numTimes;
 
-  Row infoRectRow(InfoRect rect1, rect2, rect3) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        rect1,
-        rect2,
-        rect3,
-      ],
-    );
-  }
+  CountRect(this.word, this.numTimes);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Scrollbar(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              child: Column(
-                children: <Widget>[
-                  infoRectRow(
-                    InfoRect(Icons.whatshot, "Power", stoneFree.power),
-                    InfoRect(Icons.shutter_speed, "Speed", stoneFree.speed),
-                    InfoRect(Icons.directions_walk, "Range", stoneFree.range),
-                  ),
-                  Container(height: 30),
-                  infoRectRow(
-                    InfoRect(Icons.accessibility, "Staying", stoneFree.staying),
-                    InfoRect(Icons.zoom_in, "Precision", stoneFree.precision),
-                    InfoRect(
-                        Icons.wb_incandescent, "Learning", stoneFree.learning),
-                  ),
-                ],
-              ),
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            //Num square
+            width: 120,
+            height: 90,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class InfoRect extends StatelessWidget {
-  final IconData icon;
-  final String attribute;
-  final String rank;
-
-  InfoRect(this.icon, this.attribute, this.rank);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 120,
-      decoration: BoxDecoration(
-        color: Colors.indigo[900],
-        shape: BoxShape.rectangle,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Icon(
-                icon,
-                color: Colors.indigo[200],
-                size: 45,
-              ),
-            ),
-            Text(
-              attribute,
-              style: TextStyle(fontSize: 15, color: Colors.white),
-            ),
-            Center(
+            child: Center(
               child: Text(
-                rank,
-                style: TextStyle(fontSize: 28, color: Colors.orange),
+                numTimes.toString(),
+                style: TextStyle(fontSize: 70, color: Colors.black),
               ),
             ),
-          ],
-        ),
+          ),
+          Container(
+            //Word rectangle
+            width: 130,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.rectangle,
+            ),
+            child: Center(
+              child: Text(
+                word,
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
