@@ -1,176 +1,270 @@
 import 'package:flutter/material.dart';
-import 'horari.dart';
+import 'package:exemples/stand.dart';
 
 void main() {
-  runApp(App());
+  runApp(StanpediaApp());
 }
 
-class App extends StatelessWidget {
+class StanpediaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.dark,
-        //canvasColor: Colors.indigo,
+        canvasColor: Colors.indigo,
       ),
-      home: ConsultesPage(),
+      home: StandPage(),
     );
   }
 }
 
-class Page extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Parcial'),
-      ),
-    );
-  }
-}
-
-class ConsultesPage extends StatefulWidget {
-  @override
-  _ConsultesPageState createState() => _ConsultesPageState();
-}
-
-class _ConsultesPageState extends State<ConsultesPage> {
-  List<Horari> horarisSelect = [];
-  List<bool> auxCheckList = [];
+class StandPage extends StatelessWidget {
+  const StandPage({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Consultes'),
+        title: Text('Standpedia'),
       ),
       body: Column(
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            height: 70,
-            color: Colors.grey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(flex: 7, child: _Header()),
+          Expanded(flex: 5, child: _Overview()),
+          Expanded(flex: 4, child: _StandStats()),
+        ],
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              stoneFree.standName,
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.yellow[300],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 2.03,
+              child: Image.asset(
+                stoneFree.image,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SectionTitle("Overview"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                InfoTag(105, 25, stoneFree.storyPart, Icons.star_border),
+                InfoTag(105, 25, stoneFree.standUser, Icons.face),
+                InfoTag(105, 25, stoneFree.standType, Icons.aspect_ratio),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Text(stoneFree.description),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String title;
+
+  SectionTitle(this.title);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          child: Icon(
+            Icons.remove,
+            color: Colors.orange,
+            size: 27,
+          ),
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class InfoTag extends StatelessWidget {
+  final double w, h;
+  final String label;
+  final IconData icon;
+
+  InfoTag(this.w, this.h, this.label, this.icon);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Container(
+        width: w,
+        height: h,
+        decoration: ShapeDecoration(
+          color: Colors.indigo[900],
+          shape: StadiumBorder(),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Icon(
+              icon,
+              color: Colors.indigo[200],
+              size: 20,
+            ),
+            Center(
+              child: Text(
+                label,
+                style: TextStyle(fontSize: 12, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StandStats extends StatelessWidget {
+  const _StandStats({
+    Key key,
+  }) : super(key: key);
+
+  Row infoRectRow(InfoRect rect1, rect2, rect3) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        rect1,
+        rect2,
+        rect3,
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            Container(
+              child: Column(
                 children: <Widget>[
-                  Text(
-                    "Horari escollit",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  infoRectRow(
+                    InfoRect(Icons.whatshot, "Power", stoneFree.power),
+                    InfoRect(Icons.shutter_speed, "Speed", stoneFree.speed),
+                    InfoRect(Icons.directions_walk, "Range", stoneFree.range),
                   ),
-                  RaisedButton(
-                    //Save the new counter
-                    child: Text('Canviar'),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(
-                        builder: (_) => EscullHorPage(auxCheckList),
-                      ))
-                          .then((isSelectH) {
-                         if(isSelectH != null)   
-                          auxCheckList = isSelectH;
-                        setState(() {
-                          horarisSelect.clear();
-                          for (int i = 0; i < auxCheckList.length; ++i) {
-                            if (auxCheckList[i] == true) {
-                              horarisSelect.add(totsElsHoraris[i]);
-                            }
-                          }
-                        });
-                      });
-                    },
+                  Container(height: 30),
+                  infoRectRow(
+                    InfoRect(Icons.accessibility, "Staying", stoneFree.staying),
+                    InfoRect(Icons.zoom_in, "Precision", stoneFree.precision),
+                    InfoRect(
+                        Icons.wb_incandescent, "Learning", stoneFree.learning),
                   ),
                 ],
               ),
             ),
-          ),
-          Expanded(
-              child: ListView.builder(
-            itemCount: horarisSelect.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(horarisSelect[index].toString()),
-                trailing: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    setState(() {
-                      horarisSelect.removeAt(index);
-                    });
-                  },
-                ),
-              );
-            },
-          )),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class EscullHorPage extends StatefulWidget {
-  @override
-  final List<bool> listChecks;
-  EscullHorPage(this.listChecks);
+class InfoRect extends StatelessWidget {
+  final IconData icon;
+  final String attribute;
+  final String rank;
 
-  _EscullHorPageState createState() => _EscullHorPageState();
-}
-
-class _EscullHorPageState extends State<EscullHorPage> {
-  List<bool> isHorariDisp;
-
-  @override
-  void initState() {
-    if (widget.listChecks.isEmpty) {
-      isHorariDisp = [
-        for (int i = 0; i < totsElsHoraris.length; ++i) false,
-      ];
-    } else
-      isHorariDisp = widget.listChecks;
-    super.initState();
-  }
-
+  InfoRect(this.icon, this.attribute, this.rank);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Escull un horari...'),
-        actions: <Widget>[
-          // action button
-          IconButton(
-            icon: Icon(Icons.check),
-            onPressed: () {
-              Navigator.of(context).pop(isHorariDisp);
-            },
-          ),
-        ],
+    return Container(
+      width: 100,
+      height: 120,
+      decoration: BoxDecoration(
+        color: Colors.indigo[900],
+        shape: BoxShape.rectangle,
       ),
-      body: ListView.builder(
-        itemCount: totsElsHoraris.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              setState(() {
-                isHorariDisp[index] = !isHorariDisp[index];
-              });
-            },
-            child: ListTile(
-              leading: Checkbox(
-                value: isHorariDisp[index],
-                onChanged: (bool isChecked) {
-                  setState(() {
-                    isHorariDisp[index] = !isHorariDisp[index];
-                  });
-                },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                icon,
+                color: Colors.indigo[200],
+                size: 45,
               ),
-              title: Text(totsElsHoraris[index].toString()),
             ),
-          );
-        },
+            Text(
+              attribute,
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            ),
+            Center(
+              child: Text(
+                rank,
+                style: TextStyle(fontSize: 28, color: Colors.orange),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
