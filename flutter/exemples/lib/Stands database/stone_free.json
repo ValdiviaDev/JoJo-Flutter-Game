@@ -1,0 +1,14 @@
+{
+    "Stand name": "Stone Free",
+    "Stand user": "Jolyne Cujoh",
+    "Story part": "Stone Ocean",
+    "Description": "Ability: Can form a body by gathering the strings together. Its maximum range is 2 meters, but when it  unravels into a string, its range increases but becomes very weak. It can hear sounds from far away, like a telephone line.",
+    "Range": "Short range",
+    "img": "assets/stonefree.png",
+    "power": "A",
+    "speed": "B",
+    "staying": "A",
+    "precision": "C",
+    "learning": "A",
+    "range": "1-2 m"
+}

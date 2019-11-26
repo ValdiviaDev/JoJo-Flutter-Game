@@ -1,0 +1,14 @@
+{
+    "Stand name": "Aerosmith",
+    "Stand user": "Narancia Ghirga",
+    "Story part": "Vento Aureo",
+    "Description": "Flies like a plane, and carries bullets and bombs. Tracks and detects humans and animals through their breath (carbon dioxide). Due to its low precision it cannot score hits without firing a massive barage.",
+    "Range": "Long range",
+    "img": "assets/aerosmith.png",
+    "power": "B",
+    "speed": "B",
+    "staying": "C",
+    "precision": "E",
+    "learning": "C",
+    "range": "Several dozen m"
+}

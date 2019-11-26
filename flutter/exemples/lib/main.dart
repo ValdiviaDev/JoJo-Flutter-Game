@@ -182,39 +182,37 @@ class _StandStats extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  Row infoRectRow(InfoRect rect1, rect2, rect3) {
+  Row infoRectSpaced(InfoRect rect1) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        rect1,
-        rect2,
-        rect3,
-      ],
+      children: <Widget>[rect1, Container(width: 20)],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Scrollbar(
         child: ListView(
+          scrollDirection: Axis.horizontal,
           children: <Widget>[
             Container(
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  infoRectRow(
-                    InfoRect(Icons.whatshot, "Power", stoneFree.power),
-                    InfoRect(Icons.shutter_speed, "Speed", stoneFree.speed),
-                    InfoRect(Icons.directions_walk, "Range", stoneFree.range),
-                  ),
-                  Container(height: 30),
-                  infoRectRow(
-                    InfoRect(Icons.accessibility, "Staying", stoneFree.staying),
-                    InfoRect(Icons.zoom_in, "Precision", stoneFree.precision),
-                    InfoRect(
-                        Icons.wb_incandescent, "Learning", stoneFree.learning),
-                  ),
+                  infoRectSpaced(
+                      InfoRect(Icons.whatshot, "Power", stoneFree.power)),
+                  infoRectSpaced(
+                      InfoRect(Icons.shutter_speed, "Speed", stoneFree.speed)),
+                  infoRectSpaced(InfoRect(
+                      Icons.directions_walk, "Range", stoneFree.range)),
+                  infoRectSpaced(InfoRect(
+                      Icons.accessibility, "Staying", stoneFree.staying)),
+                  infoRectSpaced(InfoRect(
+                      Icons.zoom_in, "Precision", stoneFree.precision)),
+                  InfoRect(
+                      Icons.wb_incandescent, "Learning", stoneFree.learning),
+                  Container(width: 6),
                 ],
               ),
             ),
