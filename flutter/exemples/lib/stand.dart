@@ -42,3 +42,5 @@ final stoneFree = Stand(
   'A',
   "1-2 m"
 );
+
+List<String> favStands = [];

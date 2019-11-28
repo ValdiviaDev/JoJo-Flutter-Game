@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart';
 import '../stand.dart';
 
-class StandPage extends StatelessWidget {
-  const StandPage({
-    Key key,
-  }) : super(key: key);
+class StandPage extends StatefulWidget {
+  @override
+  _StandPageState createState() => _StandPageState();
+}
+
+class _StandPageState extends State<StandPage> {
+  Color starIconColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (favStands.contains("Stone Free"))
+      starIconColor = Colors.yellow;
+    else 
+      starIconColor = Colors.white;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Standpedia'),
-      ),
+      appBar: AppBar(title: Text('Stand'), actions: <Widget>[
+        // action button
+        IconButton(
+          icon: Icon(Icons.star, color: starIconColor),
+          onPressed: () {
+            setState(() {
+              if (!favStands.contains("Stone Free")) {
+                favStands.add("Stone Free");
+                starIconColor = Colors.yellow;
+              } else {
+                favStands.remove("Stone Free");
+                starIconColor = Colors.white;
+              }
+            });
+          },
+        ),
+      ]),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
