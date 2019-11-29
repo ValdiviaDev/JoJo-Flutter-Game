@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import '../stand.dart';
 
 class StandPage extends StatefulWidget {
+  final Stand stand;
+
+  StandPage(this.stand);
+
   @override
-  _StandPageState createState() => _StandPageState();
+  _StandPageState createState() => _StandPageState(stand);
 }
 
 class _StandPageState extends State<StandPage> {
   Color starIconColor;
+  final Stand stand;
+
+  _StandPageState(this.stand);
 
   @override
   void initState() {
-    // TODO: implement initState
-    if (favStands.contains("Stone Free"))
+    if (favStands.contains(stand))
       starIconColor = Colors.yellow;
-    else 
+    else
       starIconColor = Colors.white;
     super.initState();
   }
@@ -28,11 +34,11 @@ class _StandPageState extends State<StandPage> {
           icon: Icon(Icons.star, color: starIconColor),
           onPressed: () {
             setState(() {
-              if (!favStands.contains("Stone Free")) {
-                favStands.add("Stone Free");
+              if (!favStands.contains(stand)) {
+                favStands.add(stand);
                 starIconColor = Colors.yellow;
               } else {
-                favStands.remove("Stone Free");
+                favStands.remove(stand);
                 starIconColor = Colors.white;
               }
             });
@@ -42,9 +48,9 @@ class _StandPageState extends State<StandPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(flex: 7, child: _Header()),
-          Expanded(flex: 5, child: _Overview()),
-          Expanded(flex: 4, child: _StandStats()),
+          Expanded(flex: 7, child: _Header(stand)),
+          Expanded(flex: 5, child: _Overview(stand)),
+          Expanded(flex: 4, child: _StandStats(stand)),
         ],
       ),
     );
@@ -52,9 +58,9 @@ class _StandPageState extends State<StandPage> {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({
-    Key key,
-  }) : super(key: key);
+  final Stand stand;
+  
+  _Header(this.stand);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +71,7 @@ class _Header extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              stoneFree.standName,
+              stand.standName,
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.yellow[300],
@@ -75,7 +81,7 @@ class _Header extends StatelessWidget {
             AspectRatio(
               aspectRatio: 2.03,
               child: Image.asset(
-                stoneFree.image,
+                stand.image,
                 fit: BoxFit.fitHeight,
               ),
             ),
@@ -87,9 +93,9 @@ class _Header extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({
-    Key key,
-  }) : super(key: key);
+  final Stand stand;
+  
+  _Overview(this.stand);
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +110,14 @@ class _Overview extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                InfoTag(105, 25, stoneFree.storyPart, Icons.star_border),
-                InfoTag(105, 25, stoneFree.standUser, Icons.face),
-                InfoTag(105, 25, stoneFree.standType, Icons.aspect_ratio),
+                InfoTag(105, 25, stand.storyPart, Icons.star_border),
+                InfoTag(105, 25, stand.standUser, Icons.face),
+                InfoTag(105, 25, stand.standType, Icons.aspect_ratio),
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(3.0),
-              child: Text(stoneFree.description),
+              child: Text(stand.description),
             ),
           ],
         ),
@@ -166,21 +172,23 @@ class InfoTag extends StatelessWidget {
           color: Colors.indigo[900],
           shape: StadiumBorder(),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Icon(
-              icon,
-              color: Colors.indigo[200],
-              size: 20,
-            ),
-            Center(
-              child: Text(
-                label,
-                style: TextStyle(fontSize: 12, color: Colors.white),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Icon(
+                icon,
+                color: Colors.indigo[200],
+                size: 20,
               ),
-            ),
-          ],
+              Center(
+                child: Text(
+                  label,
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -188,9 +196,9 @@ class InfoTag extends StatelessWidget {
 }
 
 class _StandStats extends StatelessWidget {
-  const _StandStats({
-    Key key,
-  }) : super(key: key);
+  final Stand stand;
+  
+  _StandStats(this.stand);
 
   Row infoRectSpaced(InfoRect rect1) {
     return Row(
@@ -213,17 +221,17 @@ class _StandStats extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       infoRectSpaced(
-                          InfoRect(Icons.whatshot, "Power", stoneFree.power)),
+                          InfoRect(Icons.whatshot, "Power", stand.power)),
                       infoRectSpaced(InfoRect(
-                          Icons.shutter_speed, "Speed", stoneFree.speed)),
+                          Icons.shutter_speed, "Speed", stand.speed)),
                       infoRectSpaced(InfoRect(
-                          Icons.directions_walk, "Range", stoneFree.range)),
+                          Icons.directions_walk, "Range", stand.range)),
                       infoRectSpaced(InfoRect(
-                          Icons.accessibility, "Staying", stoneFree.staying)),
+                          Icons.accessibility, "Staying", stand.staying)),
                       infoRectSpaced(InfoRect(
-                          Icons.zoom_in, "Precision", stoneFree.precision)),
+                          Icons.zoom_in, "Precision", stand.precision)),
                       InfoRect(Icons.wb_incandescent, "Learning",
-                          stoneFree.learning),
+                          stand.learning),
                       Container(width: 6),
                     ],
                   ),

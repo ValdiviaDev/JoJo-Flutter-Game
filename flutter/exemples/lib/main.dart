@@ -30,34 +30,34 @@ class StandListPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text('Crazy diamond'),
-            subtitle: Text('Josuke Higashikata'),
+            title: Text(crazyDiamond.standName),
+            subtitle: Text(crazyDiamond.standUser),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => StandPage(),
+                  builder: (_) => StandPage(crazyDiamond),
                 ),
               );
             },
           ),
           ListTile(
-            title: Text('Aerosmith'),
-            subtitle: Text('Narancia Ghirga'),
+            title: Text(aerosmith.standName),
+            subtitle: Text(aerosmith.standUser),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => StandPage(),
+                  builder: (_) => StandPage(aerosmith),
                 ),
               );
             },
           ),
           ListTile(
-            title: Text('Stone Free'),
-            subtitle: Text('Jolyne Kujo'),
+            title: Text(stoneFree.standName),
+            subtitle: Text(stoneFree.standUser),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => StandPage(),
+                  builder: (_) => StandPage(stoneFree),
                 ),
               );
             },
@@ -94,8 +94,8 @@ class FavouritesPage extends StatelessWidget {
         children: <Widget>[
           for (int i = 0; i < favStands.length; ++i)
             ListTile(
-              title: Text(favStands[i]),
-              subtitle: Text('User'),
+              title: Text(favStands[i].standName),
+              subtitle: Text(favStands[i].standUser),
               trailing: Icon(Icons.star),
             ),
         ],

@@ -24,6 +24,42 @@ class Stand {
   );
 }
 
+final crazyDiamond = Stand(
+  'Crazy Diamond',
+  'Josuke Higashikata',
+  'Diamond is Unbreakable',
+  'Ability: Crazy Diamond can heal any wounds no matter how'
+  ' serious they are, but it cannot heal its own user. '
+  'It can also fix any broken object. If the person wounded '
+  'is already dead, they won"t come back to life.',
+  'Short range',
+  'assets/crazydiamond.png',
+  'A',
+  'A',
+  'B',
+  'B',
+  'C',
+  "1-2 m"
+);
+
+final aerosmith = Stand(
+  'Aerosmith',
+  'Narancia Ghirga',
+  'Vento Aureo',
+  'Flies like a plane, and carries bullets and bombs. '
+  'Tracks and detects humans and animals through their '
+  'breath (carbon dioxide). Due to its low precision it '
+  'cannot score hits without firing a massive barage.',
+  'Long range',
+  'assets/aerosmith.png',
+  'B',
+  'B',
+  'C',
+  'E',
+  'C',
+  "50 m"
+);
+
 final stoneFree = Stand(
   'Stone Free',
   'Jolyne Kujo',
@@ -43,4 +79,4 @@ final stoneFree = Stand(
   "1-2 m"
 );
 
-List<String> favStands = [];
+List<Stand> favStands = [];
