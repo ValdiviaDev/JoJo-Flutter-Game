@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'Standpedia pages/stand_page.dart';
 import 'stand.dart';
 
@@ -27,43 +30,33 @@ class StandListPage extends StatelessWidget {
         title: Text('Standpedia'),
       ),
       //Go to the stand page
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text(crazyDiamond.standName),
-            subtitle: Text(crazyDiamond.standUser),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => StandPage(crazyDiamond),
-                ),
+      body: FutureBuilder(
+        future: rootBundle.loadString('assets/stands.json'),
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          String jsonString = snapshot.data;
+          List stands = jsonDecode(jsonString);
+          return ListView.builder(
+            itemCount: stands.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(stands[index]["Stand name"]),
+                subtitle: Text(stands[index]["Stand user"]),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => StandPage(crazyDiamond),
+                    ),
+                  );
+                },
               );
             },
-          ),
-          ListTile(
-            title: Text(aerosmith.standName),
-            subtitle: Text(aerosmith.standUser),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => StandPage(aerosmith),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text(stoneFree.standName),
-            subtitle: Text(stoneFree.standUser),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => StandPage(stoneFree),
-                ),
-              );
-            },
-          ),
-        ],
+          );
+        },
       ),
+
       //Go to the favourite stand list page
       floatingActionButton: FloatingActionButton(
         child: Icon(
