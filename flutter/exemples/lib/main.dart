@@ -45,9 +45,10 @@ class StandListPage extends StatelessWidget {
                 title: Text(stands[index]["Stand name"]),
                 subtitle: Text(stands[index]["Stand user"]),
                 onTap: () {
+                  final stand = Stand.fromJson(stands[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => StandPage(crazyDiamond),
+                      builder: (_) => StandPage(stand),
                     ),
                   );
                 },

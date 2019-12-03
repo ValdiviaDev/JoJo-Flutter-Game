@@ -13,12 +13,18 @@ class StandPage extends StatefulWidget {
 class _StandPageState extends State<StandPage> {
   Color starIconColor;
   final Stand stand;
-
+  bool isStandInList = false;
   _StandPageState(this.stand);
 
   @override
   void initState() {
-    if (favStands.contains(stand))
+    //Look if the stand is in the list
+    setState(() {
+      for (int i = 0; i < favStands.length; ++i) {
+        if (favStands[i].standName == stand.standName) isStandInList = true;
+      }
+    });
+    if (isStandInList)
       starIconColor = Colors.yellow;
     else
       starIconColor = Colors.white;
@@ -34,7 +40,8 @@ class _StandPageState extends State<StandPage> {
           icon: Icon(Icons.star, color: starIconColor),
           onPressed: () {
             setState(() {
-              if (!favStands.contains(stand)) {
+              //Add or remove the stand, if it is in the list or not
+              if (!isStandInList) {
                 favStands.add(stand);
                 starIconColor = Colors.yellow;
               } else {
@@ -59,7 +66,7 @@ class _StandPageState extends State<StandPage> {
 
 class _Header extends StatelessWidget {
   final Stand stand;
-  
+
   _Header(this.stand);
 
   @override
@@ -94,7 +101,7 @@ class _Header extends StatelessWidget {
 
 class _Overview extends StatelessWidget {
   final Stand stand;
-  
+
   _Overview(this.stand);
 
   @override
@@ -197,7 +204,7 @@ class InfoTag extends StatelessWidget {
 
 class _StandStats extends StatelessWidget {
   final Stand stand;
-  
+
   _StandStats(this.stand);
 
   Row infoRectSpaced(InfoRect rect1) {
@@ -222,16 +229,16 @@ class _StandStats extends StatelessWidget {
                     children: <Widget>[
                       infoRectSpaced(
                           InfoRect(Icons.whatshot, "Power", stand.power)),
-                      infoRectSpaced(InfoRect(
-                          Icons.shutter_speed, "Speed", stand.speed)),
+                      infoRectSpaced(
+                          InfoRect(Icons.shutter_speed, "Speed", stand.speed)),
                       infoRectSpaced(InfoRect(
                           Icons.directions_walk, "Range", stand.range)),
                       infoRectSpaced(InfoRect(
                           Icons.accessibility, "Staying", stand.staying)),
                       infoRectSpaced(InfoRect(
                           Icons.zoom_in, "Precision", stand.precision)),
-                      InfoRect(Icons.wb_incandescent, "Learning",
-                          stand.learning),
+                      InfoRect(
+                          Icons.wb_incandescent, "Learning", stand.learning),
                       Container(width: 6),
                     ],
                   ),
