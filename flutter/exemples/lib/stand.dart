@@ -55,8 +55,6 @@ class Stand {
       };
 }
 
-List<Stand> favStands = [];
-
 class FavouriteStands {
   Set<String> _favs;
   FavouriteStands(this._favs);
@@ -69,17 +67,19 @@ class FavouriteStands {
 
   void addFavourite(String name) {
     _favs.add(name);
-    // TODO: write JSON file with favourites
+    // Write JSON file with favourites
+    writeFavourites(_favs);
   }
 
   void removeFavourite(String name) {
     _favs.remove(name);
-    // TODO: grabar
+    // Write JSON file with favourites
+    writeFavourites(_favs);
   }
 }
 
 Future<FavouriteStands> loadFavourites() async {
-    await Future.delayed(Duration(seconds: 5));
+    //await Future.delayed(Duration(seconds: 5));
     try {
       Directory dir = await getApplicationDocumentsDirectory();
       File file = File('${dir.path}/favStands.json');
@@ -90,20 +90,17 @@ Future<FavouriteStands> loadFavourites() async {
       return FavouriteStands(Set<String>.from(json.cast<String>().toList()));
     } catch (e) {
       print("ERROR: Couldn't read the favourites list");
-      return null;
+      return FavouriteStands(Set<String>.identity()); //If the file doesn't exist, create an empty favourites class
     }
   }
 
-  /*
 
-  Future<void> _writeFavourites() async {
+  Future<void> writeFavourites(Set<String> favs) async {
     Directory dir = await getApplicationDocumentsDirectory();
     File file = File('${dir.path}/favStands.json');
-    var json = jsonEncode(favStands);
+    var json = jsonEncode(favs.cast<String>().toList());
 
     await file.writeAsString(json);
     print("SAVED LIST OF STANDS");
     print(json);
   }
-
-  */

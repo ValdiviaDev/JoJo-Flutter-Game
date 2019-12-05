@@ -45,7 +45,7 @@ class _StandPageState extends State<StandPage> {
         children: <Widget>[
           Expanded(flex: 7, child: _Header(widget.stand)),
           Expanded(flex: 5, child: _Overview(widget.stand)),
-          Expanded(flex: 4, child: _StandStats(widget.stand)),
+          Expanded(flex: 5, child: _StandStats(widget.stand)),
         ],
       ),
     );
@@ -89,8 +89,7 @@ class _Header extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            AspectRatio(
-              aspectRatio: 2.03,
+            Expanded(
               child: Image.asset(
                 stand.image,
                 fit: BoxFit.fitHeight,
@@ -121,14 +120,23 @@ class _Overview extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                InfoTag(105, 25, stand.storyPart, Icons.star_border),
-                InfoTag(105, 25, stand.standUser, Icons.face),
-                InfoTag(105, 25, stand.standType, Icons.aspect_ratio),
+                InfoTag(105, 30, stand.storyPart, Icons.star_border),
+                InfoTag(105, 30, stand.standUser, Icons.face),
+                InfoTag(105, 30, stand.standType, Icons.aspect_ratio),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Text(stand.description),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Container(
+                  child: Text(
+                    stand.description,
+                    style: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -187,12 +195,14 @@ class InfoTag extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Container(width: 5),
               Icon(
                 icon,
                 color: Colors.indigo[200],
                 size: 20,
               ),
-              Center(
+              Container(width: 5),
+              Expanded(
                 child: Text(
                   label,
                   style: TextStyle(fontSize: 12, color: Colors.white),

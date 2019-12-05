@@ -27,7 +27,16 @@ class StandListPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(stands[index]["Stand name"]),
-                subtitle: Text(stands[index]["Stand user"]),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(stands[index]["Stand user"], style: TextStyle(color: Colors.lime)),
+                    Text("Story part: " + stands[index]["Story part"], style: TextStyle(color: Colors.grey),),
+                  ],
+                ),
+
+                isThreeLine: true,
+                //trailing: Divider(color: Colors.white,),
                 onTap: () {
                   final stand = Stand.fromJson(stands[index]);
                   Navigator.of(context).push(

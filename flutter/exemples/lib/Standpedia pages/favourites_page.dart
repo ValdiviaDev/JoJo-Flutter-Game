@@ -15,7 +15,7 @@ class FavouritesPage extends StatelessWidget {
           for (int i = 0; i < favStands.length; ++i)
             ListTile(
               title: Text(favStands.getName(i)),
-              subtitle: Text(favStands.getName(i)), // TODO: nombre de personaje
+              // subtitle: Text(favStands.getName(i)), // TODO: nombre de personaje
               trailing: Icon(Icons.star),
             ),
         ],
