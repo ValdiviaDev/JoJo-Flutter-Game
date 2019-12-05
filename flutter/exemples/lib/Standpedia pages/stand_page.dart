@@ -41,13 +41,7 @@ class _StandPageState extends State<StandPage> {
           onPressed: () {
             setState(() {
               //Add or remove the stand, if it is in the list or not
-              if (!isStandInList) {
-                favStands.add(stand);
-                starIconColor = Colors.yellow;
-              } else {
-                favStands.remove(stand);
-                starIconColor = Colors.white;
-              }
+              handleStandInFavourites();
             });
           },
         ),
@@ -61,6 +55,23 @@ class _StandPageState extends State<StandPage> {
         ],
       ),
     );
+  }
+
+  void handleStandInFavourites() {
+    if (!isStandInList) {
+      //Add stand using the provided model
+      favStands.add(stand);
+      starIconColor = Colors.yellow;
+      isStandInList = true;
+    } else {
+      //Remove stand by name
+      for (int i = 0; i < favStands.length; ++i) {
+        if (favStands[i].standName == stand.standName)
+          favStands.remove(favStands[i]);
+      }
+      starIconColor = Colors.white;
+      isStandInList = false;
+    }
   }
 }
 
