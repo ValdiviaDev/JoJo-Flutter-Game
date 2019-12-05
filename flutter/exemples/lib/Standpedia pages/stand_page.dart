@@ -1,76 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../stand.dart';
 
 class StandPage extends StatefulWidget {
   final Stand stand;
-
   StandPage(this.stand);
 
   @override
-  _StandPageState createState() => _StandPageState(stand);
+  _StandPageState createState() => _StandPageState();
 }
 
 class _StandPageState extends State<StandPage> {
-  Color starIconColor;
-  final Stand stand;
-  bool isStandInList = false;
-  _StandPageState(this.stand);
+  bool isStandInList;
 
   @override
   void initState() {
-    //Look if the stand is in the list
-    setState(() {
-      for (int i = 0; i < favStands.length; ++i) {
-        if (favStands[i].standName == stand.standName) isStandInList = true;
-      }
-    });
-    if (isStandInList)
-      starIconColor = Colors.yellow;
-    else
-      starIconColor = Colors.white;
+    final favs = Provider.of<FavouriteStands>(context, listen: false);
+    if (favs != null) {
+      isStandInList = favs.isFavourite(widget.stand.standName);
+    } else {
+      isStandInList = false;
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final favs = Provider.of<FavouriteStands>(context);
     return Scaffold(
       appBar: AppBar(title: Text('Stand'), actions: <Widget>[
         // action button
         IconButton(
-          icon: Icon(Icons.star, color: starIconColor),
+          icon: Icon(Icons.star,
+              color: (isStandInList ? Colors.yellow : Colors.grey)),
           onPressed: () {
-            setState(() {
-              //Add or remove the stand, if it is in the list or not
-              handleStandInFavourites();
-            });
+            //Add or remove the stand, if it is in the list or not
+            handleStandInFavourites(favs);
           },
         ),
       ]),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(flex: 7, child: _Header(stand)),
-          Expanded(flex: 5, child: _Overview(stand)),
-          Expanded(flex: 4, child: _StandStats(stand)),
+          Expanded(flex: 7, child: _Header(widget.stand)),
+          Expanded(flex: 5, child: _Overview(widget.stand)),
+          Expanded(flex: 4, child: _StandStats(widget.stand)),
         ],
       ),
     );
   }
 
-  void handleStandInFavourites() {
+  void handleStandInFavourites(FavouriteStands favs) {
     if (!isStandInList) {
       //Add stand using the provided model
-      favStands.add(stand);
-      starIconColor = Colors.yellow;
-      isStandInList = true;
+      setState(() {
+        isStandInList = true;
+      });
+      favs.addFavourite(widget.stand.standName);
     } else {
       //Remove stand by name
-      for (int i = 0; i < favStands.length; ++i) {
-        if (favStands[i].standName == stand.standName)
-          favStands.remove(favStands[i]);
-      }
-      starIconColor = Colors.white;
-      isStandInList = false;
+      setState(() {
+        isStandInList = false;
+      });
+      favs.removeFavourite(widget.stand.standName);
     }
   }
 }
