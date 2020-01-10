@@ -1,8 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'pages/stand_list_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(JoJoApp());
 
+class JoJoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return 
+      MaterialApp(
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          canvasColor: Colors.indigo,
+        ),
+        home: StandListPage(),
+      );
+  }
+}
+
+// Firebase TEST -----------------------------------------------
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -47,9 +63,11 @@ class ChatListPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context)
+              .push(MaterialPageRoute(
             builder: (_) => NewGroupPage(),
-          )).then((groupName) {
+          ))
+              .then((groupName) {
             db.collection('groups').document().setData({
               'name': groupName,
             });
@@ -87,7 +105,9 @@ class _NewGroupPageState extends State<NewGroupPage> {
           RaisedButton(
             child: Text('Create Group'),
             onPressed: () {
-              Navigator.of(context).pop(_controller.text);
+              if (_controller.text.isNotEmpty) {
+                Navigator.of(context).pop(_controller.text);
+              }
             },
           )
         ],
