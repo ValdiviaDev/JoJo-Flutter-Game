@@ -44,4 +44,109 @@
         "range": "1-2 m"
     }
 
+    {
+        "Stand name": "Killer Queen",
+        "Stand user": "Yoshikage Kira",
+        "Story part": "Diamond is Unbreakable",
+        "Description": "Ability: Killer Queen may charge any object as a bomb simply by touching it. Once a target has touched the object, Killer Queen can detonate the target. If someone else touches the charged target before Kira can detonate it, they will automatically be blown up instead, consuming the charge.",
+        "Range": "Close range",
+        "img": "assets/killerqueen.png",
+        "power": "A",
+        "speed": "B",
+        "staying": "B",
+        "precision": "B",
+        "learning": "A",
+        "range": "1-2 m"
+    },
+
+    {
+        "Stand name": "Heaven's Door",
+        "Stand user": "Rohan Kishibe",
+        "Story part": "Diamond is Unbreakable",
+        "Description": "Ability: Heaven's Door's can turn people into books, pages unfurling from their bodies in the shape of whatever body part it opens from. The contents of the books contain detailed and absolutely true information about the person. By writing or removing into the pages, it may alter or erase memories, or put hypnotic-like commands into the person's mind.",
+        "Range": "Close range",
+        "img": "assets/heavensdoor.png",
+        "power": "D",
+        "speed": "B",
+        "staying": "B",
+        "precision": "C",
+        "learning": "A",
+        "range": "5-6 m"
+    },
+
+    {
+        "Stand name": "Sex Pistols",
+        "Stand user": "Guido Mista",
+        "Story part": "Vento Aureo",
+        "Description": "Ability: Sex Pistols is composed of six tiny bullet-like entities living inside a revolver. They are highly autonomous and have a long range. The Pistols' ability is to ride the bullets that the user fires in order to position themselves over an area, and then violently kick the bullets to change their path.",
+        "Range": "Long range",
+        "img": "assets/sexpistols.png",
+        "power": "E",
+        "speed": "C",
+        "staying": "A",
+        "precision": "A",
+        "learning": "B",
+        "range": "800-900 m"
+    },
+
+    {
+        "Stand name": "Spice Girl",
+        "Stand user": "Trish Una",
+        "Story part": "Vento Aureo",
+        "Description": "Ability: Spice Girl is able to soften any material she strikes. When Spice Girl hits something with her fists, she can soften said object into a rubber-like consistency. Said objects gain consistency and elasticity akin to rubber, unable to be crushed.",
+        "Range": "Close range",
+        "img": "assets/spicegirl.png",
+        "power": "A",
+        "speed": "A",
+        "staying": "B",
+        "precision": "D",
+        "learning": "C",
+        "range": "3-4 m"
+    },
+
+    {
+        "Stand name": "Sticky Fingers",
+        "Stand user": "Bruno Bucciarati",
+        "Story part": "Vento Aureo",
+        "Description": "Ability: Sticky Fingers' primary ability is to create zippers on any surface it touches with its fist, which it can remotely open or close at its leisure. The user can even create zippers that cut through the entirety of objects, allowing him to dismantle them. With this ability, he can separate enemies into multiple pieces.",
+        "Range": "Close range",
+        "img": "assets/stickyfingers.png",
+        "power": "A",
+        "speed": "A",
+        "staying": "D",
+        "precision": "C",
+        "learning": "D",
+        "range": "1-2 m"
+    },
+
+    {
+        "Stand name": "Weather Report",
+        "Stand user": "Weather Report",
+        "Story part": "Stone Ocean",
+        "Description": "Ability: Weather Report's ability is to control the weather through the manipulation of the atmosphere itself. This allows him to freely summon several weather phenomenons like wind, rain, or lightning to his advantage. Weather Report has enough precision that it can create micro-climates.",
+        "Range": "Long range",
+        "img": "assets/weatherreport.png",
+        "power": "A",
+        "speed": "B",
+        "staying": "B",
+        "precision": "E",
+        "learning": "A",
+        "range": "30 km"
+    },
+
+    {
+        "Stand name": "Gold Experience",
+        "Stand user": "Weather Report",
+        "Story part": "Vento Aureo",
+        "Description": "Ability: Weather Report's ability is to control the weather through the manipulation of the atmosphere itself. This allows him to freely summon several weather phenomenons like wind, rain, or lightning to his advantage. Weather Report has enough precision that it can create micro-climates.",
+        "Range": "Long range",
+        "img": "assets/weatherreport.png",
+        "power": "A",
+        "speed": "B",
+        "staying": "A",
+        "precision": "E",
+        "learning": "A",
+        "range": "30 km"
+    }
+
 ]
