@@ -136,11 +136,11 @@
 
     {
         "Stand name": "Gold Experience",
-        "Stand user": "Weather Report",
+        "Stand user": "Giorno Giovanna",
         "Story part": "Vento Aureo",
         "Description": "Ability: Weather Report's ability is to control the weather through the manipulation of the atmosphere itself. This allows him to freely summon several weather phenomenons like wind, rain, or lightning to his advantage. Weather Report has enough precision that it can create micro-climates.",
         "Range": "Long range",
-        "img": "assets/weatherreport.png",
+        "img": "assets/goldexperience.png",
         "power": "A",
         "speed": "B",
         "staying": "A",
