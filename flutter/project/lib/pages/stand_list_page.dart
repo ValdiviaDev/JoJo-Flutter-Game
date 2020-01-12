@@ -14,77 +14,60 @@ class StandListPage extends StatelessWidget {
       ),
       //Go to the stand page
       body: FutureBuilder(
-              future: rootBundle.loadString('assets/stands.json'),
-              builder: (context, AsyncSnapshot<String> snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                String jsonString = snapshot.data;
-                List stands = jsonDecode(jsonString);
-                return ListView.builder(
-                  itemCount: stands.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Column(
+        future: rootBundle.loadString('assets/stands.json'),
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          String jsonString = snapshot.data;
+          List stands = jsonDecode(jsonString);
+          return ListView.builder(
+            itemCount: stands.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(stands[index]["Stand name"],
+                          style: TextStyle(
+                              color: Colors.yellow[300],
+                              fontWeight: FontWeight.bold)),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          ListTile(
-                            title: Text(stands[index]["Stand name"],
-                                style: TextStyle(
-                                    color: Colors.yellow[300],
-                                    fontWeight: FontWeight.bold)),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(stands[index]["Stand user"],
-                                    style: TextStyle(color: Colors.white)),
-                                Container(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "Story part: " +
-                                          stands[index]["Story part"],
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            isThreeLine: true,
-                            onTap: () {
-                              final stand = Stand.fromJson(stands[index]);
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => StandPage(stand),
-                                ),
-                              );
-                            },
+                          Text(stands[index]["Stand user"],
+                              style: TextStyle(color: Colors.white)),
+                          Container(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                "Story part: " + stands[index]["Story part"],
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
                           ),
-                          Divider(thickness: 2),
                         ],
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-
-      //Go to the favourite stand list page
-     /* floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.star,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.green,
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => FavouritesPage(),
-            ),
+                      isThreeLine: true,
+                      onTap: () {
+                        final stand = Stand.fromJson(stands[index]);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => StandPage(stand),
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(thickness: 2),
+                  ],
+                ),
+              );
+            },
           );
         },
-      ),*/
+      ),
     );
   }
 }

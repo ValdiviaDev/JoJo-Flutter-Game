@@ -15,7 +15,6 @@ class _StandPageState extends State<StandPage> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
