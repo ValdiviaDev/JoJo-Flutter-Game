@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'pages/create_game.dart';
+import 'pages/current_games.dart';
+import 'pages/instructions_page.dart';
 import 'pages/main_screen.dart';
 import 'pages/pre_game_page.dart';
 import 'pages/stand_list_page.dart';
@@ -18,6 +21,9 @@ class JoJoApp extends StatelessWidget {
         '/': (context) => MainScreen(), //Main menu
         '/SLP': (context) => StandListPage(),
         '/PGP': (context) => PreGamePage(),
+        '/CuG': (context) => CurrentGames(),
+        '/CrG': (context) => CreateGame(),
+        '/IP': (context) => InstructionsPage(),
       },
     );
   }

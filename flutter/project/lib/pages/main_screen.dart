@@ -30,7 +30,7 @@ class MainScreen extends StatelessWidget {
               RaisedButton(
                 child: Text('Instructions'),
                 onPressed: () {
-                  //TODO
+                   Navigator.of(context).pushNamed('/IP');
                 },
               ),
               RaisedButton(

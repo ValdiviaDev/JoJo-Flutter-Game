@@ -16,20 +16,20 @@ class PreGamePage extends StatelessWidget {
                     child: Text('Create game'),
                     onPressed: () {
                       //TODO
-                      //Navigator.of(context).pushNamed('/PGP');
+                      Navigator.of(context).pushNamed('/CrG');
                     },
                   ),
                   RaisedButton(
                     child: Text('Join game'),
                     onPressed: () {
                       //TODO
-                      //Navigator.of(context).pushNamed('/PGP');
+                      Navigator.of(context).pushNamed('/CuG');
                     },
                   ),
                 ],
               ),
               RaisedButton(
-                child: Text('Back'),
+                child: Text('Go to main menu'),
                 onPressed: () {
                   //TODO IF LAST PAGE IS NOT MAIN SCREEN WE CANNOT DO THIS
                   Navigator.of(context).pop();
