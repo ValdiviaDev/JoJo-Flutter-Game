@@ -43,6 +43,7 @@ class JoJoApp extends StatelessWidget {
               '/CuG': (context) => CurrentGames(),
               '/CrG': (context) => CreateGame(),
               '/IP': (context) => InstructionsPage(),
+              '/WP': (context) => WaitPlayer(),
             },
           );
         },

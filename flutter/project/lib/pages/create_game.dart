@@ -1,6 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:project/P_PlayerSettings.dart';
 
-class CreateGame extends StatelessWidget {
+class CreateGame extends StatefulWidget {
+  @override
+  _CreateGameState createState() => _CreateGameState();
+}
+
+class _CreateGameState extends State<CreateGame> {
+  TextEditingController _gameName;
+
+  @override
+  void initState() {
+    _gameName = TextEditingController();
+    _gameName.text = 'Game';
+    super.initState();
+  }
+
+  Future<DocumentReference> createLobby() async {
+    DocumentReference lobby =
+        await Firestore.instance.collection("lobbies").add({
+      'Name': _gameName.text,
+      'P1': PlayerSettingsLocalization.of(context).name,
+      'P2': 'Empty',
+      'Full': false,
+      'Running': false,
+    });
+    return lobby;
+  }
+
+  void deleteLobby(DocumentReference lobby) async {
+    lobby.delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,10 +43,19 @@ class CreateGame extends StatelessWidget {
         child: Column(
           children: <Widget>[
             TextFormField(
+              controller: _gameName,
               decoration: InputDecoration(labelText: 'Game name'),
             ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
+            RaisedButton(
+              child: Text('Create'),
+              onPressed: () async {
+                DocumentReference lobby = await createLobby();
+                Navigator.of(context)
+                    .pushNamed('/WP', arguments: lobby)
+                    .then((close) {
+                  if (close) deleteLobby(lobby);
+                });
+              },
             ),
           ],
         ),
