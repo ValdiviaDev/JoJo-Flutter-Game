@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/P_PlayerSettings.dart';
 
 class PreGamePage extends StatelessWidget {
   @override
@@ -12,17 +13,16 @@ class PreGamePage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
+                  Text("Player Name: ${PlayerSettingsLocalization.of(context).name}"),
                   RaisedButton(
                     child: Text('Create game'),
                     onPressed: () {
-                      //TODO
                       Navigator.of(context).pushNamed('/CrG');
                     },
                   ),
                   RaisedButton(
                     child: Text('Join game'),
                     onPressed: () {
-                      //TODO
                       Navigator.of(context).pushNamed('/CuG');
                     },
                   ),
