@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/pages/scene_game.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/create_game.dart';
@@ -9,6 +10,7 @@ import 'pages/main_screen.dart';
 import 'pages/pre_game_page.dart';
 import 'pages/stand_list_page.dart';
 import 'pages/wait_player.dart';
+import 'pages/scene_game.dart';
 
 import 'P_PlayerSettings.dart';
 
@@ -44,6 +46,7 @@ class JoJoApp extends StatelessWidget {
               '/CrG': (context) => CreateGame(),
               '/IP': (context) => InstructionsPage(),
               '/WP': (context) => WaitPlayer(),
+              '/SG' : (context) => SceneGame(),
             },
           );
         },

@@ -30,10 +30,6 @@ class _CreateGameState extends State<CreateGame> {
     return lobby;
   }
 
-  void deleteLobby(DocumentReference lobby) async {
-    lobby.delete();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +49,7 @@ class _CreateGameState extends State<CreateGame> {
                 Navigator.of(context)
                     .pushNamed('/WP', arguments: lobby)
                     .then((close) {
-                  if (close) deleteLobby(lobby);
+                  if (close) lobby.delete();
                 });
               },
             ),

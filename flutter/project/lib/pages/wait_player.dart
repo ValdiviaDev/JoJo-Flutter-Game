@@ -13,6 +13,12 @@ class _WaitPlayerState extends State<WaitPlayer> {
   @override
   void didChangeDependencies() {
     ref = ModalRoute.of(context).settings.arguments;
+    ref.snapshots().listen((snap) {
+      if (snap.data['Running']) {
+        closing = true;
+        Navigator.of(context).pushReplacementNamed('/SG', arguments: ref);
+      }
+    });
     super.didChangeDependencies();
   }
 
@@ -39,14 +45,19 @@ class _WaitPlayerState extends State<WaitPlayer> {
                 Text("Lobby Game: ${snapshot.data['Name']}"),
                 Text("Player 1: ${snapshot.data['P1']}"),
                 Text("Player 2: ${snapshot.data['P2']}"),
-                RaisedButton(
-                  child: Text("Start"),
-                  onPressed: () {
-                    ref.updateData({
-                      'Running': true,
-                    });
-                  },
-                ),
+                (snapshot.data['P1'] ==
+                        PlayerSettingsLocalization.of(context).name)
+                    ? RaisedButton(
+                        child: Text("Start"),
+                        onPressed: () {
+                          if (snapshot.data['P2'] != 'Empty') {
+                            ref.updateData({
+                              'Running': true,
+                            });
+                          }
+                        },
+                      )
+                    : Text("Waiting player 1 to Start"),
                 RaisedButton(
                   child: Text("Exit"),
                   onPressed: () {
@@ -74,7 +85,6 @@ class _WaitPlayerState extends State<WaitPlayer> {
           },
         ),
       ),
-      
     );
   }
 }
