@@ -12,13 +12,13 @@ class _CurrentGamesState extends State<CurrentGames> {
   CollectionReference lobbies;
   ScrollController _sCotroller;
   List<DocumentSnapshot> documents;
-  var totalGames;
+  int totalGames;
   @override
   void initState() {
     lobbies = Firestore.instance.collection("lobbies");
     _sCotroller = ScrollController();
     documents = null;
-    totalGames =  0;
+    totalGames = 0;
     lobbies.snapshots().listen((querysnap) {
       setState(() {
         documents = querysnap.documents;
@@ -40,17 +40,26 @@ class _CurrentGamesState extends State<CurrentGames> {
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemCount: totalGames,
         itemBuilder: (context, i) {
-          return InkWell(child: ListTile(title: Text('Game 1: ${documents[i].data["Name"]}')),
-          onTap: (){
-            DocumentReference lobby = Firestore.instance.collection("lobbies").document(documents[i].documentID);
-            lobby.updateData({
-              'P2': PlayerSettingsLocalization.of(context).name,
-              'Full': true,
-            });
-            Navigator.of(context).pushNamed('/WP', arguments: lobby).then((close) {
+          return InkWell(
+            child:
+                ListTile(title: Text('Game $i: ${documents[i].data["Name"]}')),
+            onTap: () {
+              if (!documents[i].data['Full']) {
+                DocumentReference lobby = Firestore.instance
+                    .collection("lobbies")
+                    .document(documents[i].documentID);
+                lobby.updateData({
+                  'P2': PlayerSettingsLocalization.of(context).name,
+                  'Full': true,
+                });
+                Navigator.of(context)
+                    .pushNamed('/WP', arguments: lobby)
+                    .then((close) {
                   if (close) lobby.delete();
                 });
-          },);
+              }
+            },
+          );
         },
       ),
     );

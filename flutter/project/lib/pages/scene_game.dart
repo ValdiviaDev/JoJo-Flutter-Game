@@ -15,7 +15,7 @@ class _SceneGameState extends State<SceneGame> {
   void didChangeDependencies() {
     ref = ModalRoute.of(context).settings.arguments;
     ref.snapshots().listen((snap) {
-      if (!snap.data["Running"]) {
+      if (!snap.data["Running"] && !closing) {
         closing = true;
         ref.delete();
         Navigator.of(context).pop();
