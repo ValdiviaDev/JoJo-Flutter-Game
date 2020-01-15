@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: Text('Play'),
                 onPressed: () {
                   Provider.of<PlayerSettings>(context, listen: false).name = _textController.text;
-                  Navigator.of(context).pushNamed('/PGP');
+                  Navigator.of(context).pushNamed('/CuG');
                 },
               ),
               RaisedButton(

@@ -40,9 +40,9 @@ class JoJoApp extends StatelessWidget {
             routes: {
               '/': (context) => MainScreen(), //Main menu
               '/SLP': (context) => StandListPage(),
-              '/PGP': (context) => PreGamePage(),
+              //'/PGP': (context) => PreGamePage(),
               '/CuG': (context) => CurrentGames(),
-              '/CrG': (context) => CreateGame(),
+              //'/CrG': (context) => CreateGame(),
               '/IP': (context) => InstructionsPage(),
               '/WP': (context) => WaitPlayer(),
               '/SG' : (context) => SceneGame(),
