@@ -28,7 +28,7 @@ class JoJoApp extends StatelessWidget {
             localizationsDelegates: [
               DefaultMaterialLocalizations.delegate,
               DefaultWidgetsLocalizations.delegate,
-              PlayerSettingsDelegate(pSettings.name),
+              PlayerSettingsDelegate(pSettings.name, pSettings.lobbyID),
             ],
             theme: ThemeData(
               brightness: Brightness.dark,
