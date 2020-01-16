@@ -92,15 +92,21 @@ class _Overview extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Container(
-                  child: Text(
-                    stand.description,
-                    style: TextStyle(
-                      fontSize: 13,
+              child: Scrollbar(
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Container(
+                        child: Text(
+                          stand.description,
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
