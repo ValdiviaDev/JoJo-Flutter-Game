@@ -138,7 +138,7 @@
         "Stand name": "Gold Experience",
         "Stand user": "Giorno Giovanna",
         "Story part": "Vento Aureo",
-        "Description": "Ability: Weather Report's ability is to control the weather through the manipulation of the atmosphere itself. This allows him to freely summon several weather phenomenons like wind, rain, or lightning to his advantage. Weather Report has enough precision that it can create micro-climates.",
+        "Description": "Ability: Gold Experience can endow anything its fists touch with life. It can convert inorganic objects into living organisms, be it an animal or a plant. It is able to heal gruesome wounds through various means. This ability can also be applied to living individuals, causing their thought processes to greatly accelerate",
         "Range": "Long range",
         "img": "assets/goldexperience.png",
         "power": "A",
@@ -146,7 +146,7 @@
         "staying": "A",
         "precision": "E",
         "learning": "A",
-        "range": "30 km"
+        "range": "2 m"
     }
 
 ]
