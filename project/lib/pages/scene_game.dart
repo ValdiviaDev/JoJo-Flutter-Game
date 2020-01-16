@@ -40,7 +40,7 @@ class _SceneGameState extends State<SceneGame> {
           stream: ref.snapshots(),
           builder: (context, snapshot) {
             if (closing) {
-              return Text('Returning');
+              return Center(child: CircularProgressIndicator());
             }
             return Column(
               children: <Widget>[

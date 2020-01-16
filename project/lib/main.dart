@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'pages/create_game.dart';
-import 'pages/current_games.dart';
+import 'pages/current_lobbies.dart';
 import 'pages/instructions_page.dart';
+import 'pages/lobby_pre_game_page.dart';
 import 'pages/main_screen.dart';
-import 'pages/pre_game_page.dart';
 import 'pages/stand_list_page.dart';
-import 'pages/wait_player.dart';
 import 'pages/scene_game.dart';
 
 import 'P_PlayerSettings.dart';
@@ -40,11 +37,9 @@ class JoJoApp extends StatelessWidget {
             routes: {
               '/': (context) => MainScreen(), //Main menu
               '/SLP': (context) => StandListPage(),
-              //'/PGP': (context) => PreGamePage(),
-              '/CuG': (context) => CurrentGames(),
-              //'/CrG': (context) => CreateGame(),
+              '/CL': (context) => CurrentLobbies(),
               '/IP': (context) => InstructionsPage(),
-              '/WP': (context) => WaitPlayer(),
+              '/LS': (context) => LobbyScreen(),
               '/SG' : (context) => SceneGame(),
             },
           );

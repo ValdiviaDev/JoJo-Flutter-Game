@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/P_PlayerSettings.dart';
-import 'package:provider/provider.dart';
 
-class CurrentGames extends StatefulWidget {
+class CurrentLobbies extends StatefulWidget {
   @override
-  _CurrentGamesState createState() => _CurrentGamesState();
+  _CurrentLobbiesState createState() => _CurrentLobbiesState();
 }
 
-class _CurrentGamesState extends State<CurrentGames> {
+class _CurrentLobbiesState extends State<CurrentLobbies> {
   TextEditingController _newGameName;
 
   CollectionReference lobbies;
@@ -80,7 +79,7 @@ class _CurrentGamesState extends State<CurrentGames> {
                   'Full': true,
                 });
                 Navigator.of(context)
-                    .pushNamed('/WP', arguments: lobby)
+                    .pushNamed('/LS', arguments: lobby)
                     .then((close) {
                   if (close) lobby.delete();
                 });
@@ -117,7 +116,7 @@ class _CurrentGamesState extends State<CurrentGames> {
               onPressed: () async {
                 DocumentReference lobby = await createLobby();
                 Navigator.of(context)
-                    .pushNamed('/WP', arguments: lobby)
+                    .pushNamed('/LS', arguments: lobby)
                     .then((close) {
                   if (close) {
                     lobby.delete();

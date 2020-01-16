@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/P_PlayerSettings.dart';
 
-class WaitPlayer extends StatefulWidget {
+class LobbyScreen extends StatefulWidget {
   @override
-  _WaitPlayerState createState() => _WaitPlayerState();
+  _LobbyScreenState createState() => _LobbyScreenState();
 }
 
-class _WaitPlayerState extends State<WaitPlayer> {
+class _LobbyScreenState extends State<LobbyScreen> {
   DocumentReference ref;
   AsyncSnapshot lastSnapshot;
   bool closing;
@@ -44,7 +44,7 @@ class _WaitPlayerState extends State<WaitPlayer> {
             stream: ref.snapshots(),
             builder: (context, snapshot) {
               if (closing) {
-                return Text('Returning');
+                return Center(child: CircularProgressIndicator());
               }
               lastSnapshot = snapshot;
               return Column(
