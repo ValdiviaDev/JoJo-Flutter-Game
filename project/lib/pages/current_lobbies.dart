@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/P_PlayerSettings.dart';
+import 'package:provider/provider.dart';
 
 class CurrentLobbies extends StatefulWidget {
   @override
@@ -78,8 +79,9 @@ class _CurrentLobbiesState extends State<CurrentLobbies> {
                   'P2': PlayerSettingsLocalization.of(context).name,
                   'Full': true,
                 });
+                Provider.of<PlayerSettings>(context, listen: false).lobbyID = lobby.documentID;
                 Navigator.of(context)
-                    .pushNamed('/LS', arguments: lobby)
+                    .pushNamed('/LS')
                     .then((close) {
                   if (close) lobby.delete();
                 });
@@ -115,8 +117,9 @@ class _CurrentLobbiesState extends State<CurrentLobbies> {
               child: Text("Create"),
               onPressed: () async {
                 DocumentReference lobby = await createLobby();
+                Provider.of<PlayerSettings>(context, listen: false).lobbyID = lobby.documentID;
                 Navigator.of(context)
-                    .pushNamed('/LS', arguments: lobby)
+                    .pushReplacementNamed('/LS')
                     .then((close) {
                   if (close) {
                     lobby.delete();

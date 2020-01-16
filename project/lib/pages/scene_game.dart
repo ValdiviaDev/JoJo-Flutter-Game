@@ -8,26 +8,28 @@ class SceneGame extends StatefulWidget {
 }
 
 class _SceneGameState extends State<SceneGame> {
-  DocumentReference ref;
+  DocumentReference lobbyRef;
   bool closing;
-
-  @override
-  void didChangeDependencies() {
-    ref = ModalRoute.of(context).settings.arguments;
-    ref.snapshots().listen((snap) {
-      if (!snap.data["Running"] && !closing) {
-        closing = true;
-        ref.delete();
-        Navigator.of(context).pop();
-      }
-    });
-    super.didChangeDependencies();
-  }
 
   @override
   void initState() {
     closing = false;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    lobbyRef = Firestore.instance
+        .collection('lobbies')
+        .document(PlayerSettingsLocalization.of(context).lobbyID);
+    lobbyRef.snapshots().listen((snap) {
+      if (!snap.data["Running"] && !closing) {
+        closing = true;
+        lobbyRef.delete();
+        Navigator.of(context).pop(false);
+      }
+    });
+    super.didChangeDependencies();
   }
 
   @override
@@ -37,7 +39,7 @@ class _SceneGameState extends State<SceneGame> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: StreamBuilder(
-          stream: ref.snapshots(),
+          stream: lobbyRef.snapshots(),
           builder: (context, snapshot) {
             if (closing) {
               return Center(child: CircularProgressIndicator());
@@ -48,7 +50,7 @@ class _SceneGameState extends State<SceneGame> {
                   child: Text('End Game'),
                   onPressed: () {
                     closing = true;
-                    ref.updateData({
+                    lobbyRef.updateData({
                       'Running': false,
                     });
                     Navigator.of(context).pop(false);

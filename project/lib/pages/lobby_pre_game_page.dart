@@ -8,25 +8,28 @@ class LobbyScreen extends StatefulWidget {
 }
 
 class _LobbyScreenState extends State<LobbyScreen> {
-  DocumentReference ref;
+  DocumentReference lobbyRef;
   AsyncSnapshot lastSnapshot;
   bool closing;
-  @override
-  void didChangeDependencies() {
-    ref = ModalRoute.of(context).settings.arguments;
-    ref.snapshots().listen((snap) {
-      if (snap.data['Running']) {
-        closing = true;
-        Navigator.of(context).pushReplacementNamed('/SG', arguments: ref);
-      }
-    });
-    super.didChangeDependencies();
-  }
 
   @override
   void initState() {
     closing = false;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    lobbyRef = Firestore.instance
+        .collection('lobbies')
+        .document(PlayerSettingsLocalization.of(context).lobbyID);
+    lobbyRef.snapshots().listen((snap) {
+      if (snap.data['Running']) {
+        closing = true;
+        Navigator.of(context).pushReplacementNamed('/SG');
+      }
+    });
+    super.didChangeDependencies();
   }
 
   @override
@@ -41,7 +44,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: StreamBuilder(
-            stream: ref.snapshots(),
+            stream: lobbyRef.snapshots(),
             builder: (context, snapshot) {
               if (closing) {
                 return Center(child: CircularProgressIndicator());
@@ -58,7 +61,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                           child: Text("Start"),
                           onPressed: () {
                             if (snapshot.data['P2'] != 'Empty') {
-                              ref.updateData({
+                              lobbyRef.updateData({
                                 'Running': true,
                               });
                             }
@@ -88,11 +91,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
     } else {
       if (lastSnapshot.data['P1'] ==
           PlayerSettingsLocalization.of(context).name) {
-        ref.updateData({
+        lobbyRef.updateData({
           'P1': lastSnapshot.data['P2'],
         });
       }
-      ref.updateData({
+      lobbyRef.updateData({
         'P2': 'Empty',
         'Full': false,
       });
