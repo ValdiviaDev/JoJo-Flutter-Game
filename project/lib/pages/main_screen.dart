@@ -40,25 +40,59 @@ class _MainScreenState extends State<MainScreen> {
                   decoration: InputDecoration(labelText: 'Enter your name'),
                 ),
               ),
-              RaisedButton(
-                child: Text('Play'),
-                onPressed: () {
-                  Provider.of<PlayerSettings>(context, listen: false).name =
+              ButtonTheme(
+                minWidth: 200.0,
+                height: 70.0,
+                child: RaisedButton(
+                  child: Text(
+                    'Play',
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    Provider.of<PlayerSettings>(context, listen: false).name =
                       _textController.text;
-                  Navigator.of(context).pushNamed('/CL');
-                },
+                    Navigator.of(context).pushNamed('/CL');
+                  },
+                ),
               ),
-              RaisedButton(
-                child: Text('Stand list'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/SLP', arguments: false);
-                },
-              ),
-              RaisedButton(
-                child: Text('Instructions'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/IP');
-                },
+              ButtonTheme.bar(
+                child: new ButtonBar(
+                  alignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ButtonTheme(
+                      minWidth: 150.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        child: Text(
+                          'Stand list',
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                          ) ,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/SLP', arguments: false);
+                        },
+                      ),
+                    ),
+                    ButtonTheme(
+                      minWidth: 150.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        child: Text(
+                          'Instructions',
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/IP');
+                        },
+                      ),
+                    )
+                  ]
+                )
               ),
               RaisedButton(
                 child: Text('Exit'),
