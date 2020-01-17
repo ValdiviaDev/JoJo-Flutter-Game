@@ -47,6 +47,14 @@ class _SceneGameState extends State<SceneGame> {
         Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
+    lobbyRef.get().then((snap){
+    standP1 =
+        PlayerSettingsLocalization.of(context).stands[snap.data["P1Stand"]];
+    standP2 =
+        PlayerSettingsLocalization.of(context).stands[snap.data["P2Stand"]];
+    calculateGameOutcome();
+    });
+    //Calculate game outcome
     super.didChangeDependencies();
   }
 
@@ -66,12 +74,6 @@ class _SceneGameState extends State<SceneGame> {
             if (closing) {
               return Center(child: CircularProgressIndicator());
             }
-            standP1 = PlayerSettingsLocalization.of(context)
-                .stands[snapshot.data["P1Stand"]];
-            standP2 = PlayerSettingsLocalization.of(context)
-                .stands[snapshot.data["P2Stand"]];
-            //Calculate game outcome
-            calculateGameOutcome();
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -201,8 +203,10 @@ class _SceneGameState extends State<SceneGame> {
 
     if (playerWinTri1 == standP1.data['Stand name'])
       countStand1++;
-    else if (playerWinTri1 == standP2.data['Stand name']) countStand2++;
-    else playerWinTri1 = "noone";
+    else if (playerWinTri1 == standP2.data['Stand name'])
+      countStand2++;
+    else
+      playerWinTri1 = "noone";
 
 //Calculate winner 2
     if (triangle2P1 == 1 && triangle2P2 == 2)
@@ -220,8 +224,10 @@ class _SceneGameState extends State<SceneGame> {
 
     if (playerWinTri2 == standP1.data['Stand name'])
       countStand1++;
-    else if (playerWinTri2 == standP2.data['Stand name']) countStand2++;
-    else playerWinTri2 = "noone";
+    else if (playerWinTri2 == standP2.data['Stand name'])
+      countStand2++;
+    else
+      playerWinTri2 = "noone";
 
     //Winner
     if (countStand1 > countStand2)
@@ -262,7 +268,7 @@ class _GameResults extends StatelessWidget {
         ),
         Center(
           child: Text(
-            (countStand1 != countStand2)?"$winner WINS" : "DRAW",
+            (countStand1 != countStand2) ? "$winner WINS" : "DRAW",
             style: TextStyle(
                 fontSize: 25,
                 color: Colors.yellow,
