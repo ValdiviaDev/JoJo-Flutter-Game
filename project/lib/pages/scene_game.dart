@@ -21,7 +21,7 @@ class _SceneGameState extends State<SceneGame> {
 
   @override
   void initState() {
-    closing = false;
+    closing = true;
 
     playerWinTri1 = "";
     playerWinTri2 = "";
@@ -54,6 +54,7 @@ class _SceneGameState extends State<SceneGame> {
         standP2 =
             PlayerSettingsLocalization.of(context).stands[snap.data["P2Stand"]];
         calculateGameOutcome();
+        closing = false;
       });
     });
     //Calculate game outcome
