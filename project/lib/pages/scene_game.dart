@@ -40,6 +40,7 @@ class _SceneGameState extends State<SceneGame> {
     lobbyRef.snapshots().listen((snap) {
       if (snap.data["P1Rematch"] && snap.data["P2Rematch"]) {
         closing = true;
+
         lobbyRef.updateData({
           "P1Rematch": false,
           "P2Rematch": false,
@@ -47,16 +48,7 @@ class _SceneGameState extends State<SceneGame> {
         Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
-    lobbyRef.get().then((snap) {
-      setState(() {
-        standP1 =
-            PlayerSettingsLocalization.of(context).stands[snap.data["P1Stand"]];
-        standP2 =
-            PlayerSettingsLocalization.of(context).stands[snap.data["P2Stand"]];
-        calculateGameOutcome();
-        closing = false;
-      });
-    });
+
     //Calculate game outcome
     super.didChangeDependencies();
   }
@@ -77,6 +69,11 @@ class _SceneGameState extends State<SceneGame> {
             if (closing) {
               return Center(child: CircularProgressIndicator());
             }
+            standP1 = PlayerSettingsLocalization.of(context)
+                .stands[(snapshot.data["P1Stand"] != -1) ? snapshot.data["P1Stand"] : 0];
+            standP2 = PlayerSettingsLocalization.of(context)
+                .stands[snapshot.data[(snapshot.data["P1Stand"] != -1) ? snapshot.data["P1Stand"] : 0]];
+            calculateGameOutcome();
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
