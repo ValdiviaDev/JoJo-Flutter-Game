@@ -8,6 +8,7 @@ import 'stand_page.dart';
 class StandListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bool gameSelection = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('Standpedia'),
@@ -53,11 +54,14 @@ class StandListPage extends StatelessWidget {
                       isThreeLine: true,
                       onTap: () {
                         final stand = Stand.fromJson(stands[index]);
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => StandPage(stand),
-                          ),
-                        );
+                        if (!gameSelection) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => StandPage(stand),
+                            ),
+                          );
+                        } else
+                          preGameDialogOptions(context, stand);
                       },
                     ),
                     Divider(thickness: 2),
@@ -68,6 +72,48 @@ class StandListPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Future preGameDialogOptions(BuildContext context, Stand stand) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Select stand?"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Info",
+                style: TextStyle(color: Colors.yellow[400]),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => StandPage(stand),
+                  ),
+                );
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Select",
+                style: TextStyle(color: Colors.green[400]),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed('/SG');
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

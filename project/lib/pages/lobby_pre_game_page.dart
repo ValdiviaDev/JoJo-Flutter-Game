@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/P_PlayerSettings.dart';
 
+import 'stand_list_page.dart';
+
 class LobbyScreen extends StatefulWidget {
   @override
   _LobbyScreenState createState() => _LobbyScreenState();
@@ -24,9 +26,9 @@ class _LobbyScreenState extends State<LobbyScreen> {
         .collection('lobbies')
         .document(PlayerSettingsLocalization.of(context).lobbyID);
     lobbyRef.snapshots().listen((snap) {
-      if (snap.data['Running']) {
+      if (snap.data['Running'] && !closing) {
         closing = true;
-        Navigator.of(context).pushReplacementNamed('/SG');
+        Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
     super.didChangeDependencies();

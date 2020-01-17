@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import '../P_PlayerSettings.dart';
+import 'stand_list_page.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -36,20 +37,21 @@ class _MainScreenState extends State<MainScreen> {
               RaisedButton(
                 child: Text('Play'),
                 onPressed: () {
-                  Provider.of<PlayerSettings>(context, listen: false).name = _textController.text;
+                  Provider.of<PlayerSettings>(context, listen: false).name =
+                      _textController.text;
                   Navigator.of(context).pushNamed('/CL');
                 },
               ),
               RaisedButton(
                 child: Text('Stand list'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/SLP');
+                  Navigator.of(context).pushNamed('/SLP', arguments: false);
                 },
               ),
               RaisedButton(
                 child: Text('Instructions'),
                 onPressed: () {
-                   Navigator.of(context).pushNamed('/IP');
+                  Navigator.of(context).pushNamed('/IP');
                 },
               ),
               RaisedButton(
