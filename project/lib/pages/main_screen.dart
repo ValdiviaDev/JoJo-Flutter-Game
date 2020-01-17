@@ -58,19 +58,19 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     onPressed: () {
                       Provider.of<PlayerSettings>(context, listen: false).name =
-                        _textController.text;
+                          _textController.text;
                       Navigator.of(context).pushNamed('/CL');
                     },
                   ),
                 ),
-              ),   
+              ),
               Align(
-                alignment: Alignment.center, 
+                alignment: Alignment.center,
                 heightFactor: 1.0,
                 child: ButtonTheme.bar(
-                  child: new ButtonBar(
-                    alignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
+                    child: new ButtonBar(
+                        alignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
                       ButtonTheme(
                         minWidth: 150.0,
                         height: 50.0,
@@ -79,10 +79,11 @@ class _MainScreenState extends State<MainScreen> {
                             'Stand list',
                             style: new TextStyle(
                               fontSize: 20.0,
-                            ) ,
+                            ),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/SLP', arguments: false);
+                            Navigator.of(context)
+                                .pushNamed('/SLP', arguments: false);
                           },
                         ),
                       ),
@@ -101,22 +102,21 @@ class _MainScreenState extends State<MainScreen> {
                           },
                         ),
                       )
-                    ]
-                  )
+                    ])),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  widthFactor: 4.0,
+                  heightFactor: 5.5,
+                  child: RaisedButton(
+                    child: Text('Exit'),
+                    onPressed: () {
+                      exit(0);
+                    },
+                  ),
                 ),
               ),
-              
-              Align(
-                alignment: Alignment.bottomRight, 
-                widthFactor: 4.0, 
-                heightFactor: 5.5, 
-                child: RaisedButton(
-                  child: Text('Exit'),
-                  onPressed: () {
-                    exit(0);
-                  },
-                ),
-              ),  
             ],
           ),
         ));
