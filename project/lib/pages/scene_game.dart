@@ -93,7 +93,8 @@ class _SceneGameState extends State<SceneGame> {
                                 : 'P2': 'Empty',
                             'Running': closeLobby,
                           });
-                          Navigator.of(context).pop(closeLobby);
+                          if(closeLobby) lobbyRef.delete();
+                          Navigator.of(context).pop(false);
                         },
                       ),
                       RaisedButton(
