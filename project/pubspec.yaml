@@ -31,4 +31,15 @@ flutter:
     - assets/weatherreport.png
     - assets/stickyfingers.png
     - assets/sexpistols.png   
-    - assets/StatTriangle.png    
+    - assets/StatTriangle.png   
+
+    - assets/aerosmithstats.png 
+    - assets/crazydiamondstats.png
+    - assets/goldexperiencestats.png
+    - assets/heavensdoorstats.png
+    - assets/killerqueenstats.png
+    - assets/sexpistolsstats.png
+    - assets/spicegirlstats.png
+    - assets/stickyfingersstats.png
+    - assets/stonefreestats.png
+    - assets/weatherreportstats.png
