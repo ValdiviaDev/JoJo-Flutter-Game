@@ -43,42 +43,64 @@ class _LobbyScreenState extends State<LobbyScreen> {
       },
       child: Scaffold(
         appBar: AppBar(title: Text('Lobby')),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: StreamBuilder(
-            stream: lobbyRef.snapshots(),
-            builder: (context, snapshot) {
-              if (closing) {
-                return Center(child: CircularProgressIndicator());
-              }
-              lastSnapshot = snapshot;
-              return Column(
-                children: <Widget>[
-                  Text("Lobby Game: ${snapshot.data['Name']}"),
-                  Text("Player 1: ${snapshot.data['P1']}"),
-                  Text("Player 2: ${snapshot.data['P2']}"),
-                  (snapshot.data['P1'] ==
-                          PlayerSettingsLocalization.of(context).name)
-                      ? RaisedButton(
-                          child: Text("Start"),
-                          onPressed: () {
-                            if (snapshot.data['P2'] != 'Empty') {
-                              lobbyRef.updateData({
-                                'Running': true,
-                              });
-                            }
-                          },
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: StreamBuilder(
+              stream: lobbyRef.snapshots(),
+              builder: (context, snapshot) {
+                if (closing) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                lastSnapshot = snapshot;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Lobby Game: ${snapshot.data['Name']}",
+                      style: new TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    Text(
+                      "Player 1: ${snapshot.data['P1']}",
+                      style: new TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    Text(
+                      "Player 2: ${snapshot.data['P2']}",
+                      style: new TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    (snapshot.data['P1'] ==
+                            PlayerSettingsLocalization.of(context).name)
+                        ? Align(
+                          alignment: Alignment.center,
+                          heightFactor: 1.5,
+                          child: RaisedButton(
+                            child: Text("Start"),
+                            onPressed: () {
+                              if (snapshot.data['P2'] != 'Empty') {
+                                lobbyRef.updateData({
+                                  'Running': true,
+                                });
+                              }
+                            },
+                          )
                         )
-                      : Text("Waiting player 1 to Start"),
-                  RaisedButton(
-                    child: Text("Exit"),
-                    onPressed: () {
-                      _exit(context);
-                    },
-                  ),
-                ],
-              );
-            },
+                        : Text("Waiting player 1 to Start"),
+                    RaisedButton(
+                      child: Text("Exit"),
+                      onPressed: () {
+                        _exit(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
