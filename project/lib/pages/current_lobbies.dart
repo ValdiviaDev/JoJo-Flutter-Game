@@ -41,7 +41,9 @@ class _CurrentLobbiesState extends State<CurrentLobbies> {
         await Firestore.instance.collection("lobbies").add({
       'Name': _newGameName.text,
       'P1': PlayerSettingsLocalization.of(context).name,
+      'P1Stand' : -1,
       'P2': 'Empty',
+      'P2Stand' : -1,
       'Full': false,
       'Running': false,
     });

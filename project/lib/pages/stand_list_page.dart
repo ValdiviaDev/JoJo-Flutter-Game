@@ -11,6 +11,23 @@ class StandListPage extends StatelessWidget {
     final bool gameSelection = ModalRoute.of(context).settings.arguments;
     final List<DocumentSnapshot> stands =
         PlayerSettingsLocalization.of(context).stands;
+    int player = -1;
+    if(gameSelection){
+      bool allSelected = false;
+      DocumentReference lobby = Firestore.instance.collection('lobbies').document(PlayerSettingsLocalization.of(context).lobbyID);
+      lobby.get().then((snap){
+        if(snap.data['P1'] == PlayerSettingsLocalization.of(context).name)
+          player = 1;
+        else
+          player = 2;
+      });
+      lobby.snapshots().listen((snap){
+        if(!allSelected && snap.data['P1Stand'] != -1 && snap.data['P2Stand'] != -1){
+          allSelected = true;
+          Navigator.of(context).pushReplacementNamed('/SG');
+        }
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Standpedia'),
@@ -55,7 +72,7 @@ class StandListPage extends StatelessWidget {
                         ),
                       );
                     } else
-                      preGameDialogOptions(context, stand);
+                      preGameDialogOptions(context, stand, index, player);
                   },
                 ),
                 Divider(thickness: 2),
@@ -67,7 +84,7 @@ class StandListPage extends StatelessWidget {
     );
   }
 
-  Future preGameDialogOptions(BuildContext context, Stand stand) {
+  Future preGameDialogOptions(BuildContext context, Stand stand, int standID, int player) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -99,8 +116,12 @@ class StandListPage extends StatelessWidget {
                 style: TextStyle(color: Colors.green[400]),
               ),
               onPressed: () {
+                Firestore.instance.collection('lobbies').document(PlayerSettingsLocalization.of(context).lobbyID).updateData(
+                  {
+                    (player == 1) ? 'P1Stand' : 'P2Stand' : standID,
+                  }
+                );
                 Navigator.of(context).pop();
-                Navigator.of(context).pushReplacementNamed('/SG');
               },
             ),
           ],
