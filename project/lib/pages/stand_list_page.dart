@@ -1,7 +1,7 @@
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../P_PlayerSettings.dart';
 import '../stand.dart';
 import 'stand_page.dart';
 
@@ -9,66 +9,58 @@ class StandListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool gameSelection = ModalRoute.of(context).settings.arguments;
+    final List<DocumentSnapshot> stands =
+        PlayerSettingsLocalization.of(context).stands;
     return Scaffold(
       appBar: AppBar(
         title: Text('Standpedia'),
       ),
       //Go to the stand page
-      body: FutureBuilder(
-        future: rootBundle.loadString('assets/stands.json'),
-        builder: (context, AsyncSnapshot<String> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          String jsonString = snapshot.data;
-          List stands = jsonDecode(jsonString);
-          return ListView.builder(
-            itemCount: stands.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text(stands[index]["Stand name"],
-                          style: TextStyle(
-                              color: Colors.yellow[300],
-                              fontWeight: FontWeight.bold)),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView.builder(
+        itemCount: stands.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(stands[index].data["Stand name"],
+                      style: TextStyle(
+                          color: Colors.yellow[300],
+                          fontWeight: FontWeight.bold)),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(stands[index].data["Stand user"],
+                          style: TextStyle(color: Colors.white)),
+                      Container(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          Text(stands[index]["Stand user"],
-                              style: TextStyle(color: Colors.white)),
-                          Container(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                "Story part: " + stands[index]["Story part"],
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ],
+                          Text(
+                            "Story part: " + stands[index].data["Story part"],
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ],
                       ),
-                      isThreeLine: true,
-                      onTap: () {
-                        final stand = Stand.fromJson(stands[index]);
-                        if (!gameSelection) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => StandPage(stand),
-                            ),
-                          );
-                        } else
-                          preGameDialogOptions(context, stand);
-                      },
-                    ),
-                    Divider(thickness: 2),
-                  ],
+                    ],
+                  ),
+                  isThreeLine: true,
+                  onTap: () {
+                    final stand = Stand.fromJson(stands[index].data);
+                    if (!gameSelection) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => StandPage(stand),
+                        ),
+                      );
+                    } else
+                      preGameDialogOptions(context, stand);
+                  },
                 ),
-              );
-            },
+                Divider(thickness: 2),
+              ],
+            ),
           );
         },
       ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -17,6 +18,11 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     _textController = TextEditingController();
     _textController.text = 'Player';
+    //We will get the stand info only once, as we know stand info will never change
+    Firestore.instance.collection("stands").getDocuments().then((query) {
+      Provider.of<PlayerSettings>(context, listen: false).stands =
+          query.documents;
+    });
     super.initState();
   }
 
