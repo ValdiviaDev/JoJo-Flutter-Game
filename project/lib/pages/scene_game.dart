@@ -75,7 +75,7 @@ class _SceneGameState extends State<SceneGame> {
                         },
                       ),
                       RaisedButton(
-                        child: Text('Rematch (TODO)'),
+                        child: Text('Rematch'),
                         onPressed: () {},
                       ),
                     ],

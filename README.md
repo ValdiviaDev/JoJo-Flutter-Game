@@ -11,4 +11,4 @@ For every stand, the stat with the highest rank (A, B, C, D, E) in every triangl
 
 In case of a draw in the game, a random stat will be picked and compared between the two and the highest stat will decide the victor.
 
-This is a university project made by Julià Mauri Costa & David Valdivia Martínez.
+This is a university project made by Julià Mauri Costa, Marc Tarrés Urbieta & David Valdivia Martínez.
