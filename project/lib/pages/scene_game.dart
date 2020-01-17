@@ -27,11 +27,11 @@ class _SceneGameState extends State<SceneGame> {
         .document(PlayerSettingsLocalization.of(context).lobbyID);
     lobbyRef.snapshots().listen((snap) {
       if (snap.data["P1Rematch"] && snap.data["P2Rematch"]) {
-        lobbyRef.updateData({
-          'P1Stand': -1,
-          'P2Stand': -1,
-        });
         closing = true;
+        lobbyRef.updateData({
+          "P1Rematch"  : false,
+          "P2Rematch" : false,
+        });
         Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
@@ -105,6 +105,13 @@ class _SceneGameState extends State<SceneGame> {
                                 ? 'P1Rematch'
                                 : 'P2Rematch': true,
                           });
+                          if (snapshot.data["P1Rematch"] ||
+                              snapshot.data["P2Rematch"]) {
+                            lobbyRef.updateData({
+                              'P1Stand': -1,
+                              'P2Stand': -1,
+                            });
+                          }
                         },
                       ),
                     ],
