@@ -9,6 +9,9 @@ class SceneGame extends StatefulWidget {
 
 class _SceneGameState extends State<SceneGame> {
   DocumentReference lobbyRef;
+  DocumentSnapshot standP1;
+  DocumentSnapshot standP2;
+
   bool closing;
 
   @override
@@ -41,19 +44,28 @@ class _SceneGameState extends State<SceneGame> {
         child: StreamBuilder(
           stream: lobbyRef.snapshots(),
           builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+
             if (closing) {
               return Center(child: CircularProgressIndicator());
             }
+            standP1 = PlayerSettingsLocalization.of(context)
+                .stands[snapshot.data["P1Stand"]];
+            standP2 = PlayerSettingsLocalization.of(context)
+                .stands[snapshot.data["P2Stand"]];
+
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 4,
-                  child: _PlayersPhotos(),
+                  child: _PlayersPhotos(standP1, standP2),
                 ),
                 Expanded(
                   flex: 3,
-                  child: _PlayerStatsPhotos(),
+                  child: _PlayerStatsPhotos(standP1, standP2),
                 ),
                 Expanded(
                   flex: 3,
@@ -75,7 +87,7 @@ class _SceneGameState extends State<SceneGame> {
                         },
                       ),
                       RaisedButton(
-                        child: Text('Rematch'),
+                        child: Text('Rematch (TODO)'),
                         onPressed: () {},
                       ),
                     ],
@@ -125,9 +137,13 @@ class _GameResults extends StatelessWidget {
 }
 
 class _PlayerStatsPhotos extends StatelessWidget {
-  const _PlayerStatsPhotos({
-    Key key,
-  }) : super(key: key);
+  final DocumentSnapshot standP1;
+  final DocumentSnapshot standP2;
+
+  const _PlayerStatsPhotos(
+    this.standP1,
+    this.standP2,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -136,13 +152,13 @@ class _PlayerStatsPhotos extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Image.asset(
-            "assets/goldexperiencestats.png",
+            standP1.data['img stats'],
             fit: BoxFit.fitHeight,
           ),
         ),
         Expanded(
           child: Image.asset(
-            "assets/killerqueenstats.png",
+            standP2.data['img stats'],
             fit: BoxFit.fitHeight,
           ),
         ),
@@ -152,9 +168,13 @@ class _PlayerStatsPhotos extends StatelessWidget {
 }
 
 class _PlayersPhotos extends StatelessWidget {
-  const _PlayersPhotos({
-    Key key,
-  }) : super(key: key);
+  final DocumentSnapshot standP1;
+  final DocumentSnapshot standP2;
+
+  _PlayersPhotos(
+    this.standP1,
+    this.standP2,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -163,13 +183,13 @@ class _PlayersPhotos extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Image.asset(
-            "assets/goldexperience.png",
+            standP1.data['img'],
             fit: BoxFit.fitHeight,
           ),
         ),
         Expanded(
           child: Image.asset(
-            "assets/killerqueen.png",
+            standP2.data['img'],
             fit: BoxFit.fitHeight,
           ),
         ),
