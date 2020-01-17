@@ -47,12 +47,14 @@ class _SceneGameState extends State<SceneGame> {
         Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
-    lobbyRef.get().then((snap){
-    standP1 =
-        PlayerSettingsLocalization.of(context).stands[snap.data["P1Stand"]];
-    standP2 =
-        PlayerSettingsLocalization.of(context).stands[snap.data["P2Stand"]];
-    calculateGameOutcome();
+    lobbyRef.get().then((snap) {
+      setState(() {
+        standP1 =
+            PlayerSettingsLocalization.of(context).stands[snap.data["P1Stand"]];
+        standP2 =
+            PlayerSettingsLocalization.of(context).stands[snap.data["P2Stand"]];
+        calculateGameOutcome();
+      });
     });
     //Calculate game outcome
     super.didChangeDependencies();
