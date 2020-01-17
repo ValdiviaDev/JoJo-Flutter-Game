@@ -42,8 +42,10 @@ class _CurrentLobbiesState extends State<CurrentLobbies> {
       'Name': _newGameName.text,
       'P1': PlayerSettingsLocalization.of(context).name,
       'P1Stand' : -1,
+      'P1Rematch' : false,
       'P2': 'Empty',
       'P2Stand' : -1,
+      'P2Rematch' : false,
       'Full': false,
       'Running': false,
     });

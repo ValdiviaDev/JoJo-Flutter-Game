@@ -26,10 +26,13 @@ class _SceneGameState extends State<SceneGame> {
         .collection('lobbies')
         .document(PlayerSettingsLocalization.of(context).lobbyID);
     lobbyRef.snapshots().listen((snap) {
-      if (!snap.data["Running"] && !closing) {
+      if (snap.data["P1Rematch"] && snap.data["P2Rematch"]) {
+        lobbyRef.updateData({
+          'P1Stand': -1,
+          'P2Stand': -1,
+        });
         closing = true;
-        lobbyRef.delete();
-        Navigator.of(context).pop(false);
+        Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
     });
     super.didChangeDependencies();
@@ -77,18 +80,32 @@ class _SceneGameState extends State<SceneGame> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       RaisedButton(
-                        child: Text('End Game'),
+                        child: Text('Exit to Lobby'),
                         onPressed: () {
                           closing = true;
+
+                          bool closeLobby = (snapshot.data['P1'] == 'Empty' ||
+                              snapshot.data['P2'] == 'Empty');
                           lobbyRef.updateData({
-                            'Running': false,
+                            (snapshot.data['P1'] ==
+                                    PlayerSettingsLocalization.of(context).name)
+                                ? 'P1'
+                                : 'P2': 'Empty',
+                            'Running': closeLobby,
                           });
-                          Navigator.of(context).pop(false);
+                          Navigator.of(context).pop(closeLobby);
                         },
                       ),
                       RaisedButton(
-                        child: Text('Rematch (TODO)'),
-                        onPressed: () {},
+                        child: Text('Rematch'),
+                        onPressed: () {
+                          lobbyRef.updateData({
+                            (snapshot.data['P1'] ==
+                                    PlayerSettingsLocalization.of(context).name)
+                                ? 'P1Rematch'
+                                : 'P2Rematch': true,
+                          });
+                        },
                       ),
                     ],
                   ),
