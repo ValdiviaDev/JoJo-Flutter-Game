@@ -11,12 +11,24 @@ class _SceneGameState extends State<SceneGame> {
   DocumentReference lobbyRef;
   DocumentSnapshot standP1;
   DocumentSnapshot standP2;
+  String playerWinTri1;
+  String playerWinTri2;
+  int countStand1;
+  int countStand2;
+  String winner;
 
   bool closing;
 
   @override
   void initState() {
     closing = false;
+
+    playerWinTri1 = "";
+    playerWinTri2 = "";
+    countStand1 = 0;
+    countStand2 = 0;
+    winner = "";
+
     super.initState();
   }
 
@@ -29,8 +41,8 @@ class _SceneGameState extends State<SceneGame> {
       if (snap.data["P1Rematch"] && snap.data["P2Rematch"]) {
         closing = true;
         lobbyRef.updateData({
-          "P1Rematch"  : false,
-          "P2Rematch" : false,
+          "P1Rematch": false,
+          "P2Rematch": false,
         });
         Navigator.of(context).pushReplacementNamed('/SLP', arguments: true);
       }
@@ -58,7 +70,8 @@ class _SceneGameState extends State<SceneGame> {
                 .stands[snapshot.data["P1Stand"]];
             standP2 = PlayerSettingsLocalization.of(context)
                 .stands[snapshot.data["P2Stand"]];
-
+            //Calculate game outcome
+            calculateGameOutcome();
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -72,7 +85,8 @@ class _SceneGameState extends State<SceneGame> {
                 ),
                 Expanded(
                   flex: 3,
-                  child: _GameResults(),
+                  child: _GameResults(playerWinTri1, playerWinTri2, countStand1,
+                      countStand2, winner),
                 ),
                 Expanded(
                   flex: 1,
@@ -93,8 +107,7 @@ class _SceneGameState extends State<SceneGame> {
                                 : 'P2': 'Empty',
                             'Running': closeLobby,
                           });
-                          if(closeLobby) lobbyRef.delete();
-                          Navigator.of(context).pop(false);
+                          Navigator.of(context).pop(closeLobby);
                         },
                       ),
                       RaisedButton(
@@ -125,12 +138,111 @@ class _SceneGameState extends State<SceneGame> {
       ),
     );
   }
+
+  void calculateGameOutcome() {
+    int triangle1P1 = 0;
+    int triangle2P1 = 0;
+    int triangle1P2 = 0;
+    int triangle2P2 = 0;
+
+//Player 1 triangle 1
+    if (standP1.data['powerNum'] > standP1.data['precisionNum'] &&
+        standP1.data['powerNum'] > standP1.data['rangeNum']) triangle1P1 = 1;
+    if (standP1.data['precisionNum'] > standP1.data['powerNum'] &&
+        standP1.data['precisionNum'] > standP1.data['rangeNum'])
+      triangle1P1 = 2;
+    if (standP1.data['rangeNum'] > standP1.data['powerNum'] &&
+        standP1.data['rangeNum'] > standP1.data['precisionNum'])
+      triangle1P1 = 3;
+
+//Player 1 triangle 2
+    if (standP1.data['learningNum'] > standP1.data['speedNum'] &&
+        standP1.data['learningNum'] > standP1.data['stayingNum'])
+      triangle2P1 = 1;
+    if (standP1.data['speedNum'] > standP1.data['learningNum'] &&
+        standP1.data['speedNum'] > standP1.data['stayingNum']) triangle2P1 = 2;
+    if (standP1.data['stayingNum'] > standP1.data['speedNum'] &&
+        standP1.data['stayingNum'] > standP1.data['learningNum'])
+      triangle2P1 = 3;
+
+//Player 2 triangle 1
+    if (standP2.data['powerNum'] > standP2.data['precisionNum'] &&
+        standP2.data['powerNum'] > standP2.data['rangeNum']) triangle1P2 = 1;
+    if (standP2.data['precisionNum'] > standP2.data['powerNum'] &&
+        standP2.data['precisionNum'] > standP2.data['rangeNum'])
+      triangle1P2 = 2;
+    if (standP2.data['rangeNum'] > standP2.data['powerNum'] &&
+        standP2.data['rangeNum'] > standP2.data['precisionNum'])
+      triangle1P2 = 3;
+
+//Player 2 triangle 2
+    if (standP2.data['learningNum'] > standP2.data['speedNum'] &&
+        standP2.data['learningNum'] > standP2.data['stayingNum'])
+      triangle2P2 = 1;
+    if (standP2.data['speedNum'] > standP2.data['learningNum'] &&
+        standP2.data['speedNum'] > standP2.data['stayingNum']) triangle2P2 = 2;
+    if (standP2.data['stayingNum'] > standP2.data['speedNum'] &&
+        standP2.data['stayingNum'] > standP2.data['learningNum'])
+      triangle2P2 = 3;
+
+//Calculate winner 1
+    if (triangle1P1 == 1 && triangle1P2 == 2)
+      playerWinTri1 = standP1.data['Stand name']; //Win 1
+    else if (triangle1P1 == 1 && triangle1P2 == 3)
+      playerWinTri1 = standP2.data['Stand name']; //Win 2
+    else if (triangle1P1 == 2 && triangle1P2 == 3)
+      playerWinTri1 = standP1.data['Stand name']; //Win 1
+    else if (triangle1P1 == 2 && triangle1P2 == 1)
+      playerWinTri1 = standP2.data['Stand name']; //Win 2
+    else if (triangle1P1 == 3 && triangle1P2 == 1)
+      playerWinTri1 = standP1.data['Stand name']; //Win 1
+    else if (triangle1P1 == 3 && triangle1P2 == 2)
+      playerWinTri1 = standP2.data['Stand name']; //Win 2
+
+    if (playerWinTri1 == standP1.data['Stand name'])
+      countStand1++;
+    else if (playerWinTri1 == standP2.data['Stand name']) countStand2++;
+
+//Calculate winner 2
+    if (triangle2P1 == 1 && triangle2P2 == 2)
+      playerWinTri2 = standP1.data['Stand name']; //Win 1
+    else if (triangle2P1 == 1 && triangle2P2 == 3)
+      playerWinTri2 = standP2.data['Stand name']; //Win 2
+    else if (triangle2P1 == 2 && triangle2P2 == 3)
+      playerWinTri2 = standP1.data['Stand name']; //Win 1
+    else if (triangle2P1 == 2 && triangle2P2 == 1)
+      playerWinTri2 = standP2.data['Stand name']; //Win 2
+    else if (triangle2P1 == 3 && triangle2P2 == 1)
+      playerWinTri2 = standP1.data['Stand name']; //Win 1
+    else if (triangle2P1 == 3 && triangle2P2 == 2)
+      playerWinTri2 = standP2.data['Stand name']; //Win 2
+
+    if (playerWinTri2 == standP1.data['Stand name'])
+      countStand1++;
+    else if (playerWinTri2 == standP2.data['Stand name']) countStand2++;
+
+    //Winner
+    if (countStand1 > countStand2)
+      winner = standP1.data['Stand name'];
+    else if (countStand2 > countStand1)
+      winner = standP2.data['Stand name'];
+    else if (countStand1 == countStand2) winner = "draw";
+  }
 }
 
 class _GameResults extends StatelessWidget {
-  const _GameResults({
-    Key key,
-  }) : super(key: key);
+  final String playerWinTri1;
+  final String playerWinTri2;
+  final int countStand1;
+  final int countStand2;
+  final String winner;
+  const _GameResults(
+    this.playerWinTri1,
+    this.playerWinTri2,
+    this.countStand1,
+    this.countStand2,
+    this.winner,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -138,18 +250,17 @@ class _GameResults extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("The winner of the first triangle is a draw"),
-        Text("The winner of the second triangle is a draw"),
-        Text("The winner of the random stat pick is Gold Experience"),
+        Text("The winner of the first triangle is a $playerWinTri1"),
+        Text("The winner of the second triangle is a $playerWinTri2"),
         Center(
           child: Text(
-            "1-0",
+            "$countStand1-$countStand2",
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
         Center(
           child: Text(
-            "Gold Experience WINS",
+            (countStand1 != countStand2)?"$winner WINS" : "DRAW",
             style: TextStyle(
                 fontSize: 25,
                 color: Colors.yellow,
