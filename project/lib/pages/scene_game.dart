@@ -202,6 +202,7 @@ class _SceneGameState extends State<SceneGame> {
     if (playerWinTri1 == standP1.data['Stand name'])
       countStand1++;
     else if (playerWinTri1 == standP2.data['Stand name']) countStand2++;
+    else playerWinTri1 = "noone";
 
 //Calculate winner 2
     if (triangle2P1 == 1 && triangle2P2 == 2)
@@ -220,6 +221,7 @@ class _SceneGameState extends State<SceneGame> {
     if (playerWinTri2 == standP1.data['Stand name'])
       countStand1++;
     else if (playerWinTri2 == standP2.data['Stand name']) countStand2++;
+    else playerWinTri2 = "noone";
 
     //Winner
     if (countStand1 > countStand2)
@@ -250,8 +252,8 @@ class _GameResults extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("The winner of the first triangle is a $playerWinTri1"),
-        Text("The winner of the second triangle is a $playerWinTri2"),
+        Text("The winner of the first triangle is $playerWinTri1"),
+        Text("The winner of the second triangle is $playerWinTri2"),
         Center(
           child: Text(
             "$countStand1-$countStand2",
