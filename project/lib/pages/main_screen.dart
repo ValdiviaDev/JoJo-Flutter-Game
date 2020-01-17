@@ -33,73 +33,90 @@ class _MainScreenState extends State<MainScreen> {
         body: Center(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _textController,
-                  decoration: InputDecoration(labelText: 'Enter your name'),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    controller: _textController,
+                    decoration: InputDecoration(labelText: 'Enter your name'),
+                  ),
                 ),
               ),
-              ButtonTheme(
-                minWidth: 200.0,
-                height: 70.0,
-                child: RaisedButton(
-                  child: Text(
-                    'Play',
-                    style: new TextStyle(
-                      fontSize: 30.0,
+              Align(
+                alignment: Alignment.center,
+                heightFactor: 2.3,
+                child: ButtonTheme(
+                  minWidth: 200.0,
+                  height: 70.0,
+                  child: RaisedButton(
+                    child: Text(
+                      'Play',
+                      style: new TextStyle(
+                        fontSize: 30.0,
+                      ),
                     ),
+                    onPressed: () {
+                      Provider.of<PlayerSettings>(context, listen: false).name =
+                        _textController.text;
+                      Navigator.of(context).pushNamed('/CL');
+                    },
                   ),
+                ),
+              ),   
+              Align(
+                alignment: Alignment.center, 
+                heightFactor: 1.0,
+                child: ButtonTheme.bar(
+                  child: new ButtonBar(
+                    alignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ButtonTheme(
+                        minWidth: 150.0,
+                        height: 50.0,
+                        child: RaisedButton(
+                          child: Text(
+                            'Stand list',
+                            style: new TextStyle(
+                              fontSize: 20.0,
+                            ) ,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/SLP', arguments: false);
+                          },
+                        ),
+                      ),
+                      ButtonTheme(
+                        minWidth: 150.0,
+                        height: 50.0,
+                        child: RaisedButton(
+                          child: Text(
+                            'Instructions',
+                            style: new TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/IP');
+                          },
+                        ),
+                      )
+                    ]
+                  )
+                ),
+              ),
+              
+              Align(
+                alignment: Alignment.bottomRight, 
+                widthFactor: 4.0, 
+                heightFactor: 5.5, 
+                child: RaisedButton(
+                  child: Text('Exit'),
                   onPressed: () {
-                    Provider.of<PlayerSettings>(context, listen: false).name =
-                      _textController.text;
-                    Navigator.of(context).pushNamed('/CL');
+                    exit(0);
                   },
                 ),
-              ),
-              ButtonTheme.bar(
-                child: new ButtonBar(
-                  alignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    ButtonTheme(
-                      minWidth: 150.0,
-                      height: 50.0,
-                      child: RaisedButton(
-                        child: Text(
-                          'Stand list',
-                          style: new TextStyle(
-                            fontSize: 20.0,
-                          ) ,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/SLP', arguments: false);
-                        },
-                      ),
-                    ),
-                    ButtonTheme(
-                      minWidth: 150.0,
-                      height: 50.0,
-                      child: RaisedButton(
-                        child: Text(
-                          'Instructions',
-                          style: new TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/IP');
-                        },
-                      ),
-                    )
-                  ]
-                )
-              ),
-              RaisedButton(
-                child: Text('Exit'),
-                onPressed: () {
-                  exit(0);
-                },
-              ),
+              ),  
             ],
           ),
         ));
