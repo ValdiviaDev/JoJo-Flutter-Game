@@ -21,7 +21,7 @@ class _SceneGameState extends State<SceneGame> {
 
   @override
   void initState() {
-    closing = true;
+    closing = false;
 
     playerWinTri1 = "";
     playerWinTri2 = "";
@@ -72,7 +72,7 @@ class _SceneGameState extends State<SceneGame> {
             standP1 = PlayerSettingsLocalization.of(context)
                 .stands[(snapshot.data["P1Stand"] != -1) ? snapshot.data["P1Stand"] : 0];
             standP2 = PlayerSettingsLocalization.of(context)
-                .stands[snapshot.data[(snapshot.data["P1Stand"] != -1) ? snapshot.data["P1Stand"] : 0]];
+                .stands[(snapshot.data[snapshot.data["P1Stand"] != -1) ? snapshot.data["P1Stand"] : 0];
             calculateGameOutcome();
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
