@@ -25,6 +25,7 @@ class JoJoApp extends StatelessWidget {
         builder: (context, pSettings, _) {
           return MaterialApp(
             supportedLocales: const [Locale('en')],
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: [
               DefaultMaterialLocalizations.delegate,
               DefaultWidgetsLocalizations.delegate,

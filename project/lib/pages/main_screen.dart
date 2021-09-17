@@ -67,7 +67,8 @@ class _MainScreenState extends State<MainScreen> {
               Align(
                 alignment: Alignment.center,
                 heightFactor: 1.0,
-                child: ButtonTheme.bar(
+                child: ButtonBarTheme(
+                    data: ButtonBarThemeData(),
                     child: new ButtonBar(
                         alignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
